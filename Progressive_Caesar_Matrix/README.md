@@ -11,6 +11,16 @@ It will create a text file in a folder named Results. It does not create the fol
 C:\Users\Devon\Documents\Kryptos Scripts\Results
 ```
 It will generate 1 file with both forward and reverse matrices results. This should make searching single files easier than multiple files. 
+
+### Filename:
+- First five characters of your plaintext/ciphertext
+- Full alphabet used
+- Keyword. If no keyword is used it will be "-NONE".
+
+```py
+filename = f"Results\{first_five}-{safe_alpha}-{safe_key}.txt"
+```
+
 The first matrix is a normal Brute Force Caesar matrix from which all 26 possible progressive Caesar matrices are created.
 If you use a keyword it will translate it to a numerical offset and offset the results. This is how Kryptos K1 & K2 are solved. Examples of K1 and K2 are included (hard coded). 
 
