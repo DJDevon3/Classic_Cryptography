@@ -87,7 +87,8 @@ def caesar_matrix(text, alphabet, keyword, pattern, collector):
 # -------------------------------------------------------------
 # 2) Progressive Caesar Decode
 # -------------------------------------------------------------
-def progressive_caesar(text, alphabet, start_shift, keyword):
+def progressive_caesar(text, alphabet, start_shift, keyword=""):
+    """Progressive Caesar decode. Keyword optional: if empty, only numeric shifting occurs."""
     alphabet = alphabet.upper()
     text = text.upper()
 
@@ -105,6 +106,7 @@ def progressive_caesar(text, alphabet, start_shift, keyword):
             total_shift = progressive_shift + key_shifts[i % key_len]
             decoded = alphabet[(idx - total_shift) % L]
             result += decoded
+
             progressive_shift += 1
             i += 1
         else:
@@ -148,7 +150,69 @@ def progressive_caesar_all_matrices(text, alphabet, keyword, pattern, iterations
         # next iteration uses row 0 from this matrix
         current_text = matrix_rows[0]
 
+# -------------------------------------------------------------
+# Pure Progressive Caesar (no keyword)
+# -------------------------------------------------------------
+def pure_progressive_caesar(text, alphabet, start_shift):
+    """Pure progressive Caesar: shift sequence = start, start-1, start-2, ..."""
+    alphabet = alphabet.upper()
+    text = text.upper()
 
+    L = len(alphabet)
+    result = ""
+
+    progressive_shift = start_shift  # first shift
+    decrement = 0                    # how much to subtract each step
+
+    for char in text:
+        if char in alphabet:
+            idx = alphabet.index(char)
+            total_shift = progressive_shift - decrement
+            decoded = alphabet[(idx - total_shift) % L]
+            result += decoded
+            decrement += 1
+        else:
+            result += char
+
+    return result
+
+
+# -------------------------------------------------------------
+# Build matrices using pure progressive (no keyword)
+# -------------------------------------------------------------
+def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, collector):
+    alphabet = alphabet.upper()
+    text = text.upper()
+
+    current_text = text
+
+    for iter_no in range(iterations):
+        header1 = ""
+        header2 = f"======================"
+        header3 = f" PURE PROGRESSIVE MATRIX #{iter_no}"
+        header4 = f"======================"
+
+        for h in (header1, header2, header3, header4):
+            print(h)
+            collector.append(h)
+
+        matrix_rows = []
+
+        for start in range(len(alphabet)):
+            decoded = pure_progressive_caesar(current_text, alphabet, start)
+            matrix_rows.append(decoded)
+
+            forward, reverse, raw = check_pattern_both(decoded, pattern)
+            label = pattern_label(forward, reverse)
+
+            line = f"  {raw}{label}"
+            print(line)
+            collector.append(line)
+
+        # next iteration uses row 0
+        current_text = matrix_rows[0]
+
+        
 # -------------------------------------------------------------
 # Configuration
 # -------------------------------------------------------------
@@ -156,6 +220,8 @@ plaintext_mode = "K1"
 alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
 keyword = ""
 pattern = ""
+# To include keyword shift in progressive matrix set TRUE
+progressive_keyword = False 
 
 #alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
 #alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -215,7 +281,12 @@ output_lines_R = []
 
 # Run 2 modes Forwards
 caesar_matrix(plaintext_FS, alphabet, keyword, pattern, output_lines_F)
-progressive_caesar_all_matrices(plaintext_FS, alphabet, keyword, pattern, iterations=26, collector=output_lines_F)
+if progressive_keyword:
+    progressive_caesar_all_matrices(plaintext_FS, alphabet, keyword, pattern, iterations=26, collector=output_lines_F)
+else:
+    # Run pure progressive
+    brute_row_zero = output_lines_F[1].strip()  # adjust if needed
+    pure_progressive_caesar_all_matrices(brute_row_zero,alphabet,pattern,iterations=26,collector=output_lines_F)
 
 # Save Alphabet & Key
 safe_alpha = make_safe_filename(alphabet)
@@ -240,7 +311,10 @@ print(f"\n\nResults saved to: {filename_F}")
 
 # Run 2 modes Reversed
 caesar_matrix(plaintext_RS, alphabet, keyword, pattern, output_lines_R)
-progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, pattern, iterations=26, collector=output_lines_R)
+if progressive_keyword:
+    progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, pattern, iterations=26, collector=output_lines_R)
+else:
+    pure_progressive_caesar_all_matrices(brute_row_zero,alphabet,pattern,iterations=26,collector=output_lines_R)
 
 # REVERSED Strip Spaces and Truncate
 strip_spaces_R = plaintext_R.replace(" ", "")
