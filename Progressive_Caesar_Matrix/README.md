@@ -5,6 +5,11 @@ To run the program simply point Windows CMD prompt at the script and run with py
 ```py
 C:\Users\Devon\Documents\Kryptos Scripts>python Progressive_Caesar_Matrix.py
 ```
+It will create text files in a folder named Results. It does not create the folder for you. 
+
+```py
+C:\Users\Devon\Documents\Kryptos Scripts\Results
+```
 It will generate 2 files. Each file is your plaintext in both forward and reverse. 
 The first matrix is a normal Brute Force Caesar matrix from which all 26 possible progressive Caesar matrices are created.
 If you add a keyword is will translate it to a numerical offset and offset the results. This is how Kryptos K1 & K2 are solved. Examples of K1 and K2 are included (hard coded). 
