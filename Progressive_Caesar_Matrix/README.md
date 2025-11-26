@@ -29,4 +29,4 @@ To view a sequential skipping pattern (Scytale) simply resize your window to be 
 
 ## Keyworded Caesar Matrix also known as Vigenere or Quagmire III:
 
-A Keyworded Caesar Matrix with a custom alphabet works in exactly the same way as Vigenere. In fact, Vigenere and most substitution ciphers at their core... are actually Caesar in a different format. The main difference is a Vigenere tableu isn't used. With the right alphabet and keyword you can crack a Vigenere cipher using a keyworded Caesar cipher.
+A Keyworded Caesar Matrix with a custom alphabet works in exactly the same way as Vigenere. In fact, Vigenere and most substitution ciphers at their core... are actually Caesar in a different format. The main difference is a Vigenere tableu isn't used. With the right alphabet and keyword you can crack a Vigenere cipher using a keyworded Caesar cipher. The image above is Kryptos K1 Vigenere cipher, cracked with a Caesar matrix, using the correct alphabet and keyword. 
