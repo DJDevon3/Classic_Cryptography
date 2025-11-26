@@ -38,11 +38,11 @@ def check_pattern_both(text, pattern):
 
 def pattern_label(forward, reverse):
     if forward and reverse:
-        return "   <-- PATTERN MATCH FOUND (FWD & REV)"
+        return "   <-- MATCH (FWD & REV)"
     if forward:
-        return "   <-- PATTERN MATCH FOUND (FORWARD)"
+        return "   <-- MATCH (FWD)"
     if reverse:
-        return "   <-- PATTERN MATCH FOUND (REVERSE)"
+        return "   <-- MATCH (REV)"
     return ""
 
 def write_line(f, text):
