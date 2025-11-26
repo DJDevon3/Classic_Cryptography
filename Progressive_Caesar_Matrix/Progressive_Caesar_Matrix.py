@@ -216,7 +216,7 @@ def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, co
 # -------------------------------------------------------------
 # Configuration
 # -------------------------------------------------------------
-plaintext_mode = "K1"
+plaintext_mode = "K4"
 alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
 keyword = ""
 pattern = ""
@@ -281,49 +281,37 @@ output_lines_R = []
 
 # Run 2 modes Forwards
 caesar_matrix(plaintext_FS, alphabet, keyword, pattern, output_lines_F)
+caesar_matrix(plaintext_RS, alphabet, keyword, pattern, output_lines_R)
 if progressive_keyword:
     progressive_caesar_all_matrices(plaintext_FS, alphabet, keyword, pattern, iterations=26, collector=output_lines_F)
+    progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, pattern, iterations=26, collector=output_lines_R)
 else:
     # Run pure progressive
-    brute_row_zero = output_lines_F[1].strip()  # adjust if needed
-    pure_progressive_caesar_all_matrices(brute_row_zero,alphabet,pattern,iterations=26,collector=output_lines_F)
+    brute_row_zero_F = output_lines_F[1].strip()  # adjust if needed
+    pure_progressive_caesar_all_matrices(brute_row_zero_F,alphabet,pattern,iterations=26,collector=output_lines_F)
+    brute_row_zero_R = output_lines_R[1].strip()
+    pure_progressive_caesar_all_matrices(brute_row_zero_R,alphabet,pattern,iterations=26,collector=output_lines_R)
 
 # Save Alphabet & Key
 safe_alpha = make_safe_filename(alphabet)
 safe_key = make_safe_filename(keyword) if keyword else "NONE"
 
 # FORWARD Strip Spaces and Truncate
-strip_spaces_F = plaintext_F.replace(" ", "")
-first_five_F = strip_spaces_F[0:5]
+strip_spaces = plaintext_F.replace(" ", "")
+first_five = strip_spaces[0:5]
 
 # Save FORWARD Results
-filename_F = f"Results\F-{first_five_F}-{safe_alpha}-{safe_key}.txt"
+filename = f"Results\{first_five}-{safe_alpha}-{safe_key}.txt"
 
-with open(filename_F, "w", encoding="utf-8") as f:
+with open(filename, "w", encoding="utf-8") as f:
     f.write(f"Alphabet: {alphabet}\n")
     f.write(f"Keyword:  {keyword}\n")
     f.write(f"Plaintext:  {plaintext_F}\n")
     f.write(f"Search For:  {pattern}\n")
-    f.write("---------------------------------------------\n\n")
+    f.write("============ FORWARD =================================\n\n")
     f.write("\n".join(output_lines_F))
-
-print(f"\n\nResults saved to: {filename_F}")
-
-# Run 2 modes Reversed
-caesar_matrix(plaintext_RS, alphabet, keyword, pattern, output_lines_R)
-if progressive_keyword:
-    progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, pattern, iterations=26, collector=output_lines_R)
-else:
-    pure_progressive_caesar_all_matrices(brute_row_zero,alphabet,pattern,iterations=26,collector=output_lines_R)
-
-# REVERSED Strip Spaces and Truncate
-strip_spaces_R = plaintext_R.replace(" ", "")
-first_five_R = strip_spaces_R[0:5]
-
-# Save REVERSED Results
-filename_R = f"Results\R-{first_five_R}-{safe_alpha}-{safe_key}.txt"
-
-with open(filename_R, "w", encoding="utf-8") as f:
+    f.write(f"\n\n")
+    f.write("============ REVERSE =================================\n\n")
     f.write(f"Alphabet: {alphabet}\n")
     f.write(f"Keyword:  {keyword}\n")
     f.write(f"Plaintext:  {plaintext_R}\n")
@@ -331,4 +319,4 @@ with open(filename_R, "w", encoding="utf-8") as f:
     f.write("---------------------------------------------\n\n")
     f.write("\n".join(output_lines_R))
 
-print(f"\n\nResults saved to: {filename_R}")
+print(f"\n\nResults saved to: {filename}")
