@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 DJDevon3
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
-"""Progressive Caesar Matrix 2025-11-26"""
+"""Progressive Caesar Matrix 2025-11-27"""
 
 def make_safe_filename(s):
     """Remove characters not allowed in Windows filenames."""
@@ -79,7 +79,7 @@ def caesar_matrix(text, alphabet, keyword, pattern, collector):
         forward, reverse, raw = check_pattern_both(result, pattern)
         label = pattern_label(forward, reverse)
 
-        line = f"  {raw}{label}"
+        line = f"{raw}{label}"
         print(line)
         collector.append(line)
 
@@ -143,7 +143,7 @@ def progressive_caesar_all_matrices(text, alphabet, keyword, pattern, iterations
             forward, reverse, raw = check_pattern_both(decoded, pattern)
             label = pattern_label(forward, reverse)
 
-            line = f"  {raw}{label}"
+            line = f"{raw}{label}"
             print(line)
             collector.append(line)
 
@@ -205,7 +205,7 @@ def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, co
             forward, reverse, raw = check_pattern_both(decoded, pattern)
             label = pattern_label(forward, reverse)
 
-            line = f"  {raw}{label}"
+            line = f"{raw}{label}"
             print(line)
             collector.append(line)
 
@@ -216,7 +216,7 @@ def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, co
 # -------------------------------------------------------------
 # Configuration
 # -------------------------------------------------------------
-plaintext_mode = "K4"
+plaintext_mode = "K1"
 alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
 keyword = ""
 pattern = ""
@@ -301,7 +301,20 @@ strip_spaces = plaintext_F.replace(" ", "")
 first_five = strip_spaces[0:5]
 
 # Save FORWARD Results
-filename = f"Results\{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K4"):
+    filename = f"Results\K4-{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K4_CRIB"):
+    filename = f"Results\K4_CRIB-{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K4_X"):
+    filename = f"Results\K4_X-{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K4_CRIB"):
+    filename = f"Results\K4_CRIB-{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K4_SNAKE"):
+    filename = f"Results\K4_SNAKE-{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K1"):
+    filename = f"Results\K1-{first_five}-{safe_alpha}-{safe_key}.txt"
+if (plaintext_mode == "K2"):
+    filename = f"Results\K2-{first_five}-{safe_alpha}-{safe_key}.txt"
 
 with open(filename, "w", encoding="utf-8") as f:
     f.write(f"Alphabet: {alphabet}\n")
