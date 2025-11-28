@@ -319,7 +319,7 @@ if (plaintext_mode == "K2"):
 with open(filename, "w", encoding="utf-8") as f:
     f.write(f"Alphabet: {alphabet}\n")
     f.write(f"Keyword:  {keyword}\n")
-    f.write(f"Plaintext:  {plaintext_F}\n")
+    f.write(f"Plaintext: \n{plaintext_F}\n")
     f.write(f"Search For:  {pattern}\n")
     f.write("============ FORWARD =================================\n\n")
     f.write("\n".join(output_lines_F))
