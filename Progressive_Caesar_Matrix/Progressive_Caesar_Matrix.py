@@ -327,7 +327,7 @@ with open(filename, "w", encoding="utf-8") as f:
     f.write("============ REVERSE =================================\n\n")
     f.write(f"Alphabet: {alphabet}\n")
     f.write(f"Keyword:  {keyword}\n")
-    f.write(f"Plaintext:  {plaintext_R}\n")
+    f.write(f"Plaintext: \n{plaintext_R}\n")
     f.write(f"Search For:  {pattern}\n")
     f.write("---------------------------------------------\n\n")
     f.write("\n".join(output_lines_R))
