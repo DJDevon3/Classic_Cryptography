@@ -5,6 +5,8 @@ Because there are only 26 possible offsets it is possible to create a Caesar Mat
 A decoder ring from 1939 cannot decode a message with a 1940 decoder ring or vice versa. The alphabets used in the decoder wheels are known for every year. 
 It is possible to brute force any message, from any decoder year, using any key with this script. If a message was created with a legimate Little Orphan Annie decoder ring or Captain Midnight decoder badge even if the year isn't known, this script will crack it. 
 
+![https://raw.githubusercontent.com/DJDevon3/Classic_Cryptography/refs/heads/main/Little%20Orphan%20Annie%20Brute%20Force%20Decoder/Example2.PNG](https://raw.githubusercontent.com/DJDevon3/Classic_Cryptography/refs/heads/main/Little%20Orphan%20Annie%20Brute%20Force%20Decoder/Example2.PNG)
+
 # What is a Little Orphan Annie or Captain Midnight Decoder? 
 - The website https://www.mattblaze.org/blog/badges covers this topic far better than I can. You can see all the different makes and models of the decoders as well as their settings. 
 
@@ -15,11 +17,11 @@ It is possible to brute force any message, from any decoder year, using any key 
 
 To run the program simply point Windows CMD prompt at the script and run with python:
 ```py
-C:\Users\Devon\Documents\Kryptos Scripts>python Little_Orphan_Annie_Brute_Force.py
+C:\Users\Devon\Documents>python Little_Orphan_Annie_Brute_Force.py
 ```
 It will create a text file in a folder named Results. 
 
 ```py
-C:\Users\Devon\Documents\Kryptos Scripts\Results
+C:\Users\Devon\Documents\Results
 ```
 It will generate 1 file with all possible solutions for every decoder year. 
