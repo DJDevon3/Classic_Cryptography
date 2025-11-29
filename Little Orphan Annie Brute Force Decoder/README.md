@@ -1,9 +1,11 @@
 # Little Orphan Annie & Captain Midnight Brute Force Decoder:
 
-Decoder rings are quite simple in their method. It's a Caesar cipher decoder with a numerical offset key. The key of 1 for example is a row offset of 1. 
-Because there are only 26 possible offsets it is possible to create a Caesar Matrix with every possible solution. Every year a new decoder ring was issued with a different alphabet. 
-A decoder ring from 1939 cannot decode a message with a 1940 decoder ring or vice versa. The alphabets used in the decoder wheels are known for every year. 
-It is possible to brute force any message, from any decoder year, using any key with this script. If a message was created with a legimate Little Orphan Annie decoder ring or Captain Midnight decoder badge even if the year isn't known, this script will crack it. 
+Decoder rings are quite simple in their method. It's a Caesar cipher with a numerical offset key.
+- Because there are only 26 possible offsets it is possible to create a Caesar Matrix with every possible solution. 
+- A decoder ring from 1939 cannot decode a message with a 1940 decoder ring or vice versa.
+- The alphabets used in the decoder wheels are different every year. 
+- With this script it is possible to brute force any message, from any decoder year.
+- If a message was created with a legimate Little Orphan Annie decoder ring or Captain Midnight decoder badge even if the year isn't known, this script will crack it. 
 
 ![https://raw.githubusercontent.com/DJDevon3/Classic_Cryptography/refs/heads/main/Little%20Orphan%20Annie%20Brute%20Force%20Decoder/Example2.PNG](https://raw.githubusercontent.com/DJDevon3/Classic_Cryptography/refs/heads/main/Little%20Orphan%20Annie%20Brute%20Force%20Decoder/Example2.PNG)
 
