@@ -1,14 +1,22 @@
+# SPDX-FileCopyrightText: 2025 DJDevon3
+# SPDX-License-Identifier: MIT
+# Coded for Python 3.10.5
+"""Little Orphan Annie Brute Force 2025-11-29"""
+
 import os
 
 # ----------------------------------------------
 # CIPHERTEXT INPUT AND KEY (KEYS ARE NUMERIC 0-25)
 # It will attempt all possible keys anyway.
-# Included example is a real Little Orphan Annie code from 1936
+# Included examples are real Radio Orphan Annie codes
 # Even if you don't know the year or key this will brute force all possible solutions
-# using every possible Little Orphan Annie & Captain Midnight decoder ring/badge. 
-# ----------------------------------------------
+# for every Little Orphan Annie & Captain Midnight decoder ring/badge. 
+# -------- MESSAGE 1--------------------------
 key = 14
 cipher = "19 05 21 15 02 09 06 10 08 21 13 20 20 06 23 02 01 15 13 15 17 09 06 23 14 02"
+#-------- MESSAGE 2 --------------------------
+# key = 19
+# cipher = "07 16 16 03 03 24 07 24 23 23 24 21 20 15 09 20 14 24 05 01 23 15"
 # ----------------------------------------------
 
 def make_safe_filename(s):
@@ -93,8 +101,8 @@ def generate_all_in_one_file(cipher, key, alphabets):
     strip_spaces = cipher.replace(" ", "")
     first_five = strip_spaces[0:5]
 
-    # Build one combined output filename
-    combined_filename = f"Results/LittleOrphanAnnie-{first_five}-ALL-{key}.txt"
+    # Build combined output filename
+    combined_filename = f"Results/LittleOrphanAnnie-{first_five}-{key}.txt"
 
     with open(combined_filename, "w", encoding="utf-8") as out:
 
@@ -110,12 +118,12 @@ def generate_all_in_one_file(cipher, key, alphabets):
             # Decode using numeric Caesar
             decoded = decode_number_caesar(cipher, key, alphabet)
 
-            # Write header for this alphabet
+            # Write file header 
             out.write(f"Alphabet ({year}): {alphabet}\n")
             out.write(f"Decoded Text: {decoded}\n\n")
             out.write("----- Caesar Matrix -----\n\n")
 
-            # Build and write matrix
+            # Build and write matrix to file
             matrix = build_caesar_matrix(decoded, alphabet, double_space=True)
             out.write("\n".join(matrix))
             out.write("\n\n============================================================\n\n")
