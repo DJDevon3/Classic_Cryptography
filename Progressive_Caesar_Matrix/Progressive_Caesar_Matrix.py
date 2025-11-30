@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 DJDevon3
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
-"""Progressive Caesar Matrix 2025-11-27"""
+"""Progressive Caesar Matrix 2025-11-29"""
 
 def make_safe_filename(s):
     """Remove characters not allowed in Windows filenames."""
@@ -180,7 +180,7 @@ def pure_progressive_caesar(text, alphabet, start_shift):
 # -------------------------------------------------------------
 # Build matrices using pure progressive (no keyword)
 # -------------------------------------------------------------
-def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, collector):
+def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, pattern, iterations, collector):
     alphabet = alphabet.upper()
     text = text.upper()
 
@@ -191,8 +191,9 @@ def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, co
         header2 = f"======================"
         header3 = f" PURE PROGRESSIVE MATRIX #{iter_no}"
         header4 = f"======================"
-
-        for h in (header1, header2, header3, header4):
+        header5 = f"{plaintext}\n"
+        
+        for h in (header1, header2, header3, header4, header5):
             print(h)
             collector.append(h)
 
@@ -216,11 +217,16 @@ def pure_progressive_caesar_all_matrices(text, alphabet, pattern, iterations, co
 # -------------------------------------------------------------
 # Configuration
 # -------------------------------------------------------------
+# For attacking K4 change mode to K4. K1 is a demonstration mode. 
 plaintext_mode = "K1"
 alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
 keyword = ""
 pattern = ""
+
 # To include keyword shift in progressive matrix set TRUE
+# This is basically a multiplicative progressive process
+# This method is much harder to follow by eye
+# Recommend keeping this set to False
 progressive_keyword = False 
 
 #alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
@@ -235,7 +241,8 @@ progressive_keyword = False
 #alphabet = "HYDRABCEFGIJKLMNOPQSTUVWXZ"
 #alphabet = "CENTRALIGYBDFHJKMOPQSUVWXZ"
 #alphabet = "JIMSANBORCDEFGHKLPQTUVWXYZ"
-#alphabet = "BDFHJLNPRTVXZACEGIKMOQSUWY"
+#alphabet = "BDFHJLNPRTVXZACEGIKMOQSUWY" # split in half, equadistant split. 
+#alphabet = "ZXVTRPNLJHFDBACEGIKMOQSUWY" # split in half, equadistant from middle. 
 
 # - Attempted Reverse Engineer Plaintext Alphabets 
 #alphabet = "FELARSVTQNPUBCDGHIJKMOYZWX"
@@ -243,6 +250,22 @@ progressive_keyword = False
 #alphabet = "QPORTNHGEKASBCDFIJLMUVWXYZ"
 #alphabet = "NBYEPRVLTIMCZFOADGHJKQSUWX"
 #alphabet = "TIMNZCFLPOWKYBVRADEGHJQSUX"
+
+# ======== MORSE CODE ================
+"""
+E E V I R T U A L L Y E
+E E E E E E I N V I S I B L E 
+D I G E T A L E E E 
+I N T E R P R E T A T I T
+E E S H A D O W E E 
+F O R C E S E E E E 
+E L U C I D E E E 
+M E M O R Y E 
+T I S Y O U R 
+P O S I T I O N E
+S O S
+R Q
+"""
 
 # ========= HARDCODED MODES ============
 #------K4
@@ -288,9 +311,9 @@ if progressive_keyword:
 else:
     # Run pure progressive
     brute_row_zero_F = output_lines_F[1].strip()  # adjust if needed
-    pure_progressive_caesar_all_matrices(brute_row_zero_F,alphabet,pattern,iterations=26,collector=output_lines_F)
+    pure_progressive_caesar_all_matrices(plaintext_FS, brute_row_zero_F,alphabet,pattern,iterations=26,collector=output_lines_F)
     brute_row_zero_R = output_lines_R[1].strip()
-    pure_progressive_caesar_all_matrices(brute_row_zero_R,alphabet,pattern,iterations=26,collector=output_lines_R)
+    pure_progressive_caesar_all_matrices(plaintext_RS, brute_row_zero_R,alphabet,pattern,iterations=26,collector=output_lines_R)
 
 # Save Alphabet & Key
 safe_alpha = make_safe_filename(alphabet)
