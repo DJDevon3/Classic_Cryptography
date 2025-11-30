@@ -3,6 +3,59 @@
 # Coded for Python 3.10.5
 """Progressive Caesar Matrix 2025-11-29"""
 
+# -------------------------------------------------------------
+# Configuration
+# -------------------------------------------------------------
+# For attacking K4 change mode to K4. K1 is a demonstration mode. 
+plaintext_mode = "K1"
+alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+keyword = ""
+pattern = ""
+
+# To include keyword shift in progressive matrix set TRUE
+# This is basically a multiplicative progressive process
+# This method is much harder to follow by eye
+# Recommend keeping this set to False
+progressive_keyword = False 
+
+#alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+#alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#alphabet = "ZYXWVUTSRQPONMABCDEFGHIJKL"
+#alphabet = "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+#alphabet = "PALIMSETBCDFGHJKNOQRUVWXYZ"
+#alphabet = "MAGNETICBDFHJKLOPQRSUVWXYZ"
+#alphabet = "ANTIPODESBCFGHJKLMQRUVWXYZ"
+#alphabet = "ARTICHOKEBDFGJLMNPQSUVWXYZ"
+#alphabet = "HYDRAULICBEFGJKMNOPQSTVWXZ"
+#alphabet = "HYDRABCEFGIJKLMNOPQSTUVWXZ"
+#alphabet = "CENTRALIGYBDFHJKMOPQSUVWXZ"
+#alphabet = "JIMSANBORCDEFGHKLPQTUVWXYZ"
+#alphabet = "BDFHJLNPRTVXZACEGIKMOQSUWY" # split in half, equadistant split. 
+#alphabet = "ZXVTRPNLJHFDBACEGIKMOQSUWY" # split in half, equadistant from middle. 
+
+# - Attempted Reverse Engineer Plaintext Alphabets 
+#alphabet = "FELARSVTQNPUBCDGHIJKMOYZWX"
+#alphabet = "JKFELARSVTQNOPWBCDGHIMUXYZ"
+#alphabet = "QPORTNHGEKASBCDFIJLMUVWXYZ"
+#alphabet = "NBYEPRVLTIMCZFOADGHJKQSUWX"
+#alphabet = "TIMNZCFLPOWKYBVRADEGHJQSUX"
+
+# ======== MORSE CODE ================
+"""
+E E V I R T U A L L Y E
+E E E E E E I N V I S I B L E 
+D I G E T A L E E E 
+I N T E R P R E T A T I T
+E E S H A D O W E E 
+F O R C E S E E E E 
+E L U C I D E E E 
+M E M O R Y E 
+T I S Y O U R 
+P O S I T I O N E
+S O S
+R Q
+"""
+
 def make_safe_filename(s):
     """Remove characters not allowed in Windows filenames."""
     unsafe = '<>:"/\\|?*'
@@ -57,8 +110,8 @@ def caesar_matrix(text, alphabet, keyword, pattern, collector):
     key_shifts = make_shifts_from_keyword(keyword, alphabet)
     key_len = len(key_shifts)
     L = len(alphabet)
-
-    header = f"=== Brute Caesar Matrix (alphabet='{alphabet}', keyword='{keyword}') ==="
+        
+    header = f"====================== Brute Caesar Matrix (Alphabet:{alphabet} Keyword:{keyword}) ======================"
     print(header)
     collector.append(header)
 
@@ -127,7 +180,7 @@ def progressive_caesar_all_matrices(text, alphabet, keyword, pattern, iterations
     for iter_no in range(iterations):
         header1 = ""
         header2 = f"======================"
-        header3 = f" PROGRESSIVE CAESAR MATRIX #{iter_no}"
+        header3 = f" PROGRESSIVE CAESAR MATRIX #{iter_no} (Alphabet:{alphabet} Keyword:{keyword})"
         header4 = f"======================"
 
         for h in (header1, header2, header3, header4):
@@ -189,7 +242,7 @@ def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, pattern, ite
     for iter_no in range(iterations):
         header1 = ""
         header2 = f"======================"
-        header3 = f" PURE PROGRESSIVE MATRIX #{iter_no}"
+        header3 = f" PURE PROGRESSIVE MATRIX #{iter_no} (Alphabet:{alphabet} Keyword:{keyword})"
         header4 = f"======================"
         header5 = f"{plaintext}\n"
         
@@ -212,60 +265,6 @@ def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, pattern, ite
 
         # next iteration uses row 0
         current_text = matrix_rows[0]
-
-        
-# -------------------------------------------------------------
-# Configuration
-# -------------------------------------------------------------
-# For attacking K4 change mode to K4. K1 is a demonstration mode. 
-plaintext_mode = "K1"
-alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-keyword = ""
-pattern = ""
-
-# To include keyword shift in progressive matrix set TRUE
-# This is basically a multiplicative progressive process
-# This method is much harder to follow by eye
-# Recommend keeping this set to False
-progressive_keyword = False 
-
-#alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-#alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-#alphabet = "ZYXWVUTSRQPONMABCDEFGHIJKL"
-#alphabet = "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
-#alphabet = "PALIMSETBCDFGHJKNOQRUVWXYZ"
-#alphabet = "MAGNETICBDFHJKLOPQRSUVWXYZ"
-#alphabet = "ANTIPODESBCFGHJKLMQRUVWXYZ"
-#alphabet = "ARTICHOKEBDFGJLMNPQSUVWXYZ"
-#alphabet = "HYDRAULICBEFGJKMNOPQSTVWXZ"
-#alphabet = "HYDRABCEFGIJKLMNOPQSTUVWXZ"
-#alphabet = "CENTRALIGYBDFHJKMOPQSUVWXZ"
-#alphabet = "JIMSANBORCDEFGHKLPQTUVWXYZ"
-#alphabet = "BDFHJLNPRTVXZACEGIKMOQSUWY" # split in half, equadistant split. 
-#alphabet = "ZXVTRPNLJHFDBACEGIKMOQSUWY" # split in half, equadistant from middle. 
-
-# - Attempted Reverse Engineer Plaintext Alphabets 
-#alphabet = "FELARSVTQNPUBCDGHIJKMOYZWX"
-#alphabet = "JKFELARSVTQNOPWBCDGHIMUXYZ"
-#alphabet = "QPORTNHGEKASBCDFIJLMUVWXYZ"
-#alphabet = "NBYEPRVLTIMCZFOADGHJKQSUWX"
-#alphabet = "TIMNZCFLPOWKYBVRADEGHJQSUX"
-
-# ======== MORSE CODE ================
-"""
-E E V I R T U A L L Y E
-E E E E E E I N V I S I B L E 
-D I G E T A L E E E 
-I N T E R P R E T A T I T
-E E S H A D O W E E 
-F O R C E S E E E E 
-E L U C I D E E E 
-M E M O R Y E 
-T I S Y O U R 
-P O S I T I O N E
-S O S
-R Q
-"""
 
 # ========= HARDCODED MODES ============
 #------K4
