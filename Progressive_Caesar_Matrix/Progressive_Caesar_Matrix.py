@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 DJDevon3
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
-"""Progressive Caesar Matrix 2025-11-29"""
+"""Progressive Caesar Matrix 2025-12-01"""
 
 # -------------------------------------------------------------
 # Configuration
@@ -9,7 +9,7 @@
 # For attacking K4 change mode to K4. K1 is a demonstration mode. 
 plaintext_mode = "K1"
 alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-keyword = ""
+keyword = "PALIMPSEST"
 pattern = ""
 
 # To include keyword shift in progressive matrix set TRUE
@@ -270,6 +270,12 @@ def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, pattern, ite
 #------K4
 if (plaintext_mode == "K4"):
     plaintext_F = "O B K R U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P V T T M Z F P K W G D K Z X T J C D I G K U H U A U E K C A R"
+if (plaintext_mode == "K4_1"):
+    plaintext_F = "O B K R U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O T"
+if (plaintext_mode == "K4_2"):
+    plaintext_F = "W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P V T T M Z F"
+if (plaintext_mode == "K4_3"):
+    plaintext_F = "P K W G D K Z X T J C D I G K U H U A U E K C A R"
 #------K4 PLAINTEXT CRIB WORDS
 if (plaintext_mode == "K4_CRIB"):
     plaintext_F = "X X X X X X X X X X X X X X X X X X X X X E A S T N O R T H E A S T X X X X X X X X X X X X X X X X X X X X X X X X X X X X X B E R L I N C L O C K X X X X X X X X X X X X X X X X X X X X X X X"
@@ -318,27 +324,16 @@ else:
 safe_alpha = make_safe_filename(alphabet)
 safe_key = make_safe_filename(keyword) if keyword else "NONE"
 
-# FORWARD Strip Spaces and Truncate
+# FORWARD Strip Spaces and Truncate for filename
 strip_spaces = plaintext_F.replace(" ", "")
 first_five = strip_spaces[0:5]
 
-# Save FORWARD Results
-if (plaintext_mode == "K4"):
-    filename = f"Results\K4-{first_five}-{safe_alpha}-{safe_key}.txt"
-if (plaintext_mode == "K4_CRIB"):
-    filename = f"Results\K4_CRIB-{first_five}-{safe_alpha}-{safe_key}.txt"
-if (plaintext_mode == "K4_X"):
-    filename = f"Results\K4_X-{first_five}-{safe_alpha}-{safe_key}.txt"
-if (plaintext_mode == "K4_CRIB"):
-    filename = f"Results\K4_CRIB-{first_five}-{safe_alpha}-{safe_key}.txt"
-if (plaintext_mode == "K4_SNAKE"):
-    filename = f"Results\K4_SNAKE-{first_five}-{safe_alpha}-{safe_key}.txt"
-if (plaintext_mode == "K1"):
-    filename = f"Results\K1-{first_five}-{safe_alpha}-{safe_key}.txt"
-if (plaintext_mode == "K2"):
-    filename = f"Results\K2-{first_five}-{safe_alpha}-{safe_key}.txt"
+# Save Results to file
+filename = f"Results\{plaintext_mode}-{first_five}-{safe_alpha}-{safe_key}.txt"
+
 
 with open(filename, "w", encoding="utf-8") as f:
+    f.write(f"Mode: {plaintext_mode}\n")
     f.write(f"Alphabet: {alphabet}\n")
     f.write(f"Keyword:  {keyword}\n")
     f.write(f"Plaintext: \n{plaintext_F}\n")
@@ -347,6 +342,7 @@ with open(filename, "w", encoding="utf-8") as f:
     f.write("\n".join(output_lines_F))
     f.write(f"\n\n")
     f.write("============ REVERSE =================================\n\n")
+    f.write(f"Mode: {plaintext_mode}\n")
     f.write(f"Alphabet: {alphabet}\n")
     f.write(f"Keyword:  {keyword}\n")
     f.write(f"Plaintext: \n{plaintext_R}\n")
