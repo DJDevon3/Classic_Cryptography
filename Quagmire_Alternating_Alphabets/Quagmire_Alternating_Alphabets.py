@@ -14,6 +14,11 @@ def make_safe_filename(s):
         s = s.replace(ch, "")
     return s
 
+def reverse_keyword(keyword, reverse=False):
+    if reverse:
+        keyword = keyword[::-1]
+
+    return keyword
 
 def keyword_alphabet(keyword, reverse=False):
     keyword = ''.join(dict.fromkeys(keyword.upper()))
@@ -71,7 +76,7 @@ def save_matrix(matrix, filename):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(f"MULTIPLE ALTERNATING ALPHABETS MATRIX\n")
         f.write(f"Alphabets: {alphabets}\n")
-        f.write(f"Keywords:  {keyword0}-{keyword1}-{keyword2}-{keyword3}\n")
+        f.write(f"Keywords:  {rkey0}-{rkey1}-{rkey2}-{rkey3}\n")
         f.write(f"Ciphertext: \n{ciphertext}\n")
         f.write("------------------ Matrix 0 ---------------------------\n")
         for row in matrix:
@@ -81,9 +86,9 @@ def save_matrix(matrix, filename):
 
 # Config
 ciphertext_mode = "K4"
-keyword0 = "KRYPTOS"
-keyword1 = "PALIMPSET"
-keyword2 = "ABSCI"
+keyword0 = "ABC"
+keyword1 = "ABC"
+keyword2 = "ABC"
 keyword3 = "ABC"
 
 A0 = keyword_alphabet(keyword0)
@@ -106,6 +111,10 @@ print("\nMATRIX:")
 print_matrix(matrix)
 
 # Save Results to file
-filename = f"Quagmire Alternating Alphabets Results\{keyword0}-{keyword1}-{keyword2}-{keyword3}.txt"
+rkey0 = reverse_keyword(keyword0)
+rkey1 = reverse_keyword(keyword1, reverse=True)
+rkey2 = reverse_keyword(keyword2)
+rkey3 = reverse_keyword(keyword3, reverse=True)
+filename = f"Quagmire Alternating Alphabets Results\{rkey0}-{rkey1}-{rkey2}-{rkey3}.txt"
 save_matrix(matrix, filename)
 
