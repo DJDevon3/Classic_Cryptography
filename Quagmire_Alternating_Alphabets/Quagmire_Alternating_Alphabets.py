@@ -4,8 +4,20 @@
 """Quagmire Alternating Alphabets 2026-05-26"""
 
 import string
-
 STD = string.ascii_uppercase
+
+# Script Configuration Options
+ciphertext_mode = "K4"
+keyword0 = "ABC"
+keyword1 = "ABC"
+keyword2 = "ABC"
+keyword3 = "ABC"
+
+if (ciphertext_mode == "CUSTOM"):
+    ciphertext = ("EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD")
+if (ciphertext_mode == "K4"):
+    ciphertext = ("OBKRUOXOGHULBSOLIFBBWFLRVQQPRNGKSSOTWTQSJQSSEKZZWATJKLUDIAWINFBNYPVTTMZFPKWGDKZXTJCDIGKUHUAUEKCAR")
+
 
 def make_safe_filename(s):
     """Remove characters not allowed in Windows filenames."""
@@ -83,24 +95,14 @@ def save_matrix(matrix, filename):
             f.write(" ".join(row) + "\n")
     print(f"\n\nResults saved to: {filename}")
 
-
-# Config
-ciphertext_mode = "K4"
-keyword0 = "ABC"
-keyword1 = "ABC"
-keyword2 = "ABC"
-keyword3 = "ABC"
-
+# Reverse scheme is identical regardless of alternating start. 
+# The direction simply reverses, it's 100% recriprocal. 
+# No alternating parameter to switch them is needed. 
 A0 = keyword_alphabet(keyword0)
 A1 = keyword_alphabet(keyword1, reverse=True)
 A2 = keyword_alphabet(keyword2)
 A3 = keyword_alphabet(keyword3, reverse=True)
 alphabets = [A0, A1, A2, A3]
-
-if (ciphertext_mode == "CUSTOM"):
-    ciphertext = ("EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD")
-if (ciphertext_mode == "K4"):
-    ciphertext = ("OBKRUOXOGHULBSOLIFBBWFLRVQQPRNGKSSOTWTQSJQSSEKZZWATJKLUDIAWINFBNYPVTTMZFPKWGDKZXTJCDIGKUHUAUEKCAR")
 
 matrix = build_columnar_hybrid_matrix(ciphertext, alphabets)
 
@@ -115,6 +117,7 @@ rkey0 = reverse_keyword(keyword0)
 rkey1 = reverse_keyword(keyword1, reverse=True)
 rkey2 = reverse_keyword(keyword2)
 rkey3 = reverse_keyword(keyword3, reverse=True)
+ 
 filename = f"Quagmire Alternating Alphabets Results\{rkey0}-{rkey1}-{rkey2}-{rkey3}.txt"
 save_matrix(matrix, filename)
 
