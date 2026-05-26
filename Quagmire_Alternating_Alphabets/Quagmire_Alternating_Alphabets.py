@@ -15,8 +15,17 @@ keyword3 = "ABC"
 
 if (ciphertext_mode == "CUSTOM"):
     ciphertext = ("EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD")
+if (ciphertext_mode == "K4_SNAKE"):
+    ciphertext = ("O B K R O S S K G N R P Q Q V R L F W B B F I L O S B L U H G O X O U T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P R A C K E U A U H U K G I D C J T X Z K D G W K P F Z M T T V")
 if (ciphertext_mode == "K4"):
     ciphertext = ("OBKRUOXOGHULBSOLIFBBWFLRVQQPRNGKSSOTWTQSJQSSEKZZWATJKLUDIAWINFBNYPVTTMZFPKWGDKZXTJCDIGKUHUAUEKCAR")
+if (ciphertext_mode == "K4_SCYTALE_3"):
+    ciphertext = ("O R X H B L B F V P G S W S S K W J U A N N V M P G Z J I U A K R B U O U S I B L Q R K O T J S Z A K D W F Y T Z K D X C G H U C K O G L O F W R Q N S T Q Q E Z T L I I B P T F W K T D K U E A")
+if (ciphertext_mode == "K4_CRIB"):
+    ciphertext = ("x x x x x x x x x x x x x x x x x x x x x E A S T N O R T H E A S T x x x x x x x x x x x x x x x x x x x x x x x x x x x x x B E R L I N C L O C K x x x x x x x x x x x x x x x x x x x x x x x")
+ciphertext = ciphertext.upper()
+ciphertext = ciphertext.replace(" ", "")
+first_ten = ciphertext[0:10]
 
 
 def make_safe_filename(s):
@@ -96,7 +105,7 @@ def save_matrix(matrix, filename):
     print(f"\n\nResults saved to: {filename}")
 
 # Reverse scheme is identical regardless of alternating start. 
-# The direction simply reverses, it's 100% recriprocal. 
+# The column alphabet direction simply reverses, it's 100% recriprocal. 
 # No alternating parameter to switch them is needed. 
 A0 = keyword_alphabet(keyword0)
 A1 = keyword_alphabet(keyword1, reverse=True)
@@ -118,6 +127,6 @@ rkey1 = reverse_keyword(keyword1, reverse=True)
 rkey2 = reverse_keyword(keyword2)
 rkey3 = reverse_keyword(keyword3, reverse=True)
  
-filename = f"Quagmire Alternating Alphabets Results\{rkey0}-{rkey1}-{rkey2}-{rkey3}.txt"
+filename = f"Quagmire Alternating Alphabets Results\{rkey0}-{rkey1}-{rkey2}-{rkey3}_{first_ten}.txt"
 save_matrix(matrix, filename)
 
