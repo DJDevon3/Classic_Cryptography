@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 DJDevon3
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
-"""Quagmire Alternating Alphabets 2026-05-27"""
+"""Quagmire Alternating Alphabets 2026-05-28"""
 
 import string
 STD = string.ascii_uppercase
@@ -22,7 +22,7 @@ keyword3 = "ABC"
 
 # For adding custom variations that can be switched to with ciphertext mode switch
 if (ciphertext_mode == "CUSTOM"):
-    ciphertext = ("EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD")
+    ciphertext = ("T H I S I S A T E S T C I P H E R O F A N O V E L A L T E R N A T I N G K E Y W O R D E D C A E S A R M A T R I X E N C R Y P T I O N B Y R E D D I T U S E R B L O W N G U S T")
 if (ciphertext_mode == "K4_SNAKE"):
     ciphertext = ("O B K R O S S K G N R P Q Q V R L F W B B F I L O S B L U H G O X O U T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P R A C K E U A U H U K G I D C J T X Z K D G W K P F Z M T T V")
 if (ciphertext_mode == "K4"):
@@ -31,6 +31,8 @@ if (ciphertext_mode == "K4_SCYTALE_3"):
     ciphertext = ("O R X H B L B F V P G S W S S K W J U A N N V M P G Z J I U A K R B U O U S I B L Q R K O T J S Z A K D W F Y T Z K D X C G H U C K O G L O F W R Q N S T Q Q E Z T L I I B P T F W K T D K U E A")
 if (ciphertext_mode == "K4_CRIB"):
     ciphertext = ("x x x x x x x x x x x x x x x x x x x x x E A S T N O R T H E A S T x x x x x x x x x x x x x x x x x x x x x x x x x x x x x B E R L I N C L O C K x x x x x x x x x x x x x x x x x x x x x x x")
+if (ciphertext_mode == "K1"):
+    ciphertext = ("EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD")
 ciphertext = ciphertext.upper()
 ciphertext = ciphertext.replace(" ", "")
 first_ten = ciphertext[0:10]
@@ -96,6 +98,13 @@ def print_matrix(matrix):
     """
     for row in matrix:
         print(" ".join(row))
+        
+def print_matrix_reverse(matrix):
+    """
+    Reversed double-spaced console print
+    """
+    for row in matrix:
+        print(" ".join(row[::-1]))
 
 
 def save_matrix(matrix, filename):
@@ -117,9 +126,12 @@ def save_matrix(matrix, filename):
         if (number_of_alphabets == "4"):
             f.write(f"Keywords:  {rkey0}-{rkey1}-{rkey2}-{rkey3}\n")
         f.write(f"Ciphertext: \n{ciphertext}\n")
-        f.write("------------------ Matrix 0 ---------------------------\n")
+        f.write("\n------------------ Matrix Result Forward ---------------------------\n")
         for row in matrix:
             f.write(" ".join(row) + "\n")
+        f.write("\n------------------ Matrix Result Reverse ---------------------------\n")
+        for row in matrix:
+            f.write(" ".join(row[::-1]) + "\n")
     print(f"\n\nResults saved to: {filename}")
 
 # Reverse scheme is identical regardless of alternating start with keyword0 or keyword1. 
@@ -151,8 +163,10 @@ matrix = build_columnar_hybrid_matrix(ciphertext, alphabets)
 # Print to CMD Prompt
 print("\nCIPHERTEXT:")
 print(" ".join(ciphertext))
-print("\nMATRIX:")
+print("\nMATRIX FORWARD:")
 print_matrix(matrix)
+print("\nMATRIX REVERSE:")
+print_matrix_reverse(matrix)
 
 # Save Results to file
 if (alternating_direction):
