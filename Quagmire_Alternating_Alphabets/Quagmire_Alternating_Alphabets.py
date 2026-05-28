@@ -1,24 +1,33 @@
 # SPDX-FileCopyrightText: 2026 DJDevon3
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
-"""Quagmire Alternating Alphabets 2026-05-28"""
+"""
+Quagmire Alternating Alphabets + Scytale Decryption 2026-05-28
+"""
 
 import string
+import math
+
 STD = string.ascii_uppercase
 
 """
 Script Configuration Options
-You can make a standard Caesar matrix by setting alternating to false 
-and number of alphabets to 1
+You can make a standard Caesar matrix by setting 
+alternating to false & number of alphabets to 1
+You can make a fully custom alphabet by inputting your
+entire 26 character alphabet instead of a keyword
 """
 ciphertext_mode = "K4"
-alternating_direction = "TRUE" #TRUE or FALSE
-number_of_alphabets = "4" #1 to 4 optional
-#Maximum of 4 keyworded alphabets
+number_of_alphabets = "4" # 1 to 4 optional
+alternating_direction = True  # True or False
 keyword0 = "ABC"
 keyword1 = "ABC"
 keyword2 = "ABC"
 keyword3 = "ABC"
+
+# Optional Additional Scytale Post-Processing
+enable_scytale = True
+scytale_rod_sizes = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 # For adding custom variations that can be switched to with ciphertext mode switch
 if (ciphertext_mode == "CUSTOM"):
@@ -37,9 +46,14 @@ ciphertext = ciphertext.upper()
 ciphertext = ciphertext.replace(" ", "")
 first_ten = ciphertext[0:10]
 
+# ==========================================
+# FUNCTIONS
+# ==========================================
 
 def make_safe_filename(s):
-    """Remove characters not allowed in Windows filenames."""
+    """
+    Remove characters not allowed in Windows filenames.
+    """
     unsafe = '<>:"/\\|?*'
     for ch in unsafe:
         s = s.replace(ch, "")
@@ -48,20 +62,15 @@ def make_safe_filename(s):
 def reverse_keyword(keyword, reverse=False):
     if reverse:
         keyword = keyword[::-1]
-
     return keyword
 
 def keyword_alphabet(keyword, reverse=False):
     keyword = ''.join(dict.fromkeys(keyword.upper()))
     remain = ''.join(c for c in STD if c not in keyword)
-
     alpha = keyword + remain
-
     if reverse:
         alpha = alpha[::-1]
-
     return alpha
-
 
 def rotate_to_top(alpha, letter):
     """
@@ -70,27 +79,21 @@ def rotate_to_top(alpha, letter):
     idx = alpha.index(letter)
     return alpha[idx:] + alpha[:idx]
 
-
 def build_columnar_hybrid_matrix(ciphertext, alphabets):
     """
     First row = ciphertext
     Each column uses alternating alphabets
     """
     columns = []
-
     for i, c in enumerate(ciphertext):
         alpha = alphabets[i % len(alphabets)]
         rotated = rotate_to_top(alpha, c)
         columns.append(rotated)
-
     rows = []
-
     for r in range(26):
         row = [col[r] for col in columns]
         rows.append(row)
-
     return rows
-
 
 def print_matrix(matrix):
     """
@@ -98,7 +101,7 @@ def print_matrix(matrix):
     """
     for row in matrix:
         print(" ".join(row))
-        
+
 def print_matrix_reverse(matrix):
     """
     Reversed double-spaced console print
@@ -106,11 +109,61 @@ def print_matrix_reverse(matrix):
     for row in matrix:
         print(" ".join(row[::-1]))
 
+# ==========================================
+# SCYTALE FUNCTIONS
+# ==========================================
 
+def scytale_decrypt(text, rod_size):
+    """
+    Standard scytale decryption
+    """
+    length = len(text)
+    cols = math.ceil(length / rod_size)
+    grid = [['' for _ in range(cols)] for _ in range(rod_size)]
+    idx = 0
+    for r in range(rod_size):
+        for c in range(cols):
+
+            if idx < length:
+                grid[r][c] = text[idx]
+                idx += 1
+    plaintext = ""
+    for c in range(cols):
+        for r in range(rod_size):
+
+            if grid[r][c]:
+                plaintext += grid[r][c]
+    return plaintext
+
+
+def scytale_decrypt_from_rows(rows, rod_size):
+    """
+    Apply scytale decryption to matrix row results
+    """
+    decrypted_rows = []
+    for row in rows:
+        text = ''.join(row)
+        decrypted = scytale_decrypt(text, rod_size)
+        decrypted_rows.append(decrypted)
+    return decrypted_rows
+
+
+def print_scytale_results(rows, rod_sizes):
+    print(f"\n=============== Forward Matrix Results processed into Scytale Skip ===============")
+    for rod in rod_sizes:
+        print(f"\n------------------ Scytale Rod Size {rod} ------------------")
+        results = scytale_decrypt_from_rows(rows, rod)
+        for i, result in enumerate(results):
+            spaced = " ".join(result)
+            print(spaced)
+
+# ==========================================
+# SAVE RESULTS TO TXT FILE
+# ==========================================
 def save_matrix(matrix, filename):
     """
-    Header in text file save with process used
-    This makes backtracking, file searching, or sharing results easier
+    Header with processes used 
+    makes backtracking, file searching, or sharing results easier
     """
     with open(filename, "w", encoding="utf-8") as f:
         f.write(f"MULTIPLE ALTERNATING ALPHABETS MATRIX\n")
@@ -126,38 +179,60 @@ def save_matrix(matrix, filename):
         if (number_of_alphabets == "4"):
             f.write(f"Keywords:  {rkey0}-{rkey1}-{rkey2}-{rkey3}\n")
         f.write(f"Ciphertext: \n{ciphertext}\n")
-        f.write("\n------------------ Matrix Result Forward ---------------------------\n")
+        f.write("\n------------------ Matrix Result Forward ------------------\n")
         for row in matrix:
             f.write(" ".join(row) + "\n")
-        f.write("\n------------------ Matrix Result Reverse ---------------------------\n")
+        f.write("\n------------------ Matrix Result Reverse ------------------\n")
         for row in matrix:
             f.write(" ".join(row[::-1]) + "\n")
+            
+        #Optional: Forward results only are then processed with Scytale
+        if enable_scytale:
+            f.write(f"\n=============== Forward Matrix Results processed into Scytale Skip ===============\n")
+            for rod in scytale_rod_sizes:
+                f.write(f"\n------------------ Scytale Rod Size {rod} ------------------\n")
+                results = scytale_decrypt_from_rows(matrix, rod)
+                for i, result in enumerate(results):
+                    spaced = " ".join(result)
+                    f.write(spaced + "\n")
+                    
     print(f"\n\nResults saved to: {filename}")
 
-# Reverse scheme is identical regardless of alternating start with keyword0 or keyword1. 
-# The column alphabet direction reverses and displays the matrix upside down, it's 100% recriprocal. 
-# No alternating parameter to switch them is needed.
+# ==========================================
+# BUILD ALPHABETS
+# ==========================================
+
 if (alternating_direction):
+
     A0 = keyword_alphabet(keyword0)
     A1 = keyword_alphabet(keyword1, reverse=True)
     A2 = keyword_alphabet(keyword2)
     A3 = keyword_alphabet(keyword3, reverse=True)
-if not (alternating_direction):
+
+else:
+
     A0 = keyword_alphabet(keyword0)
     A1 = keyword_alphabet(keyword1)
     A2 = keyword_alphabet(keyword2)
-    A3 = keyword_alphabet(keyword3)    
-    
-# Current hardcoded limit is 4    
-if (number_of_alphabets == "1"):    
+    A3 = keyword_alphabet(keyword3)
+
+# Current hardcoded limit is 4
+
+if (number_of_alphabets == "1"):
     alphabets = [A0]
+
 if (number_of_alphabets == "2"):
     alphabets = [A0, A1]
+
 if (number_of_alphabets == "3"):
     alphabets = [A0, A1, A2]
+
 if (number_of_alphabets == "4"):
     alphabets = [A0, A1, A2, A3]
 
+# ==========================================
+# BUILD MATRIX
+# ==========================================
 matrix = build_columnar_hybrid_matrix(ciphertext, alphabets)
 
 # Print to CMD Prompt
@@ -167,7 +242,9 @@ print("\nMATRIX FORWARD:")
 print_matrix(matrix)
 print("\nMATRIX REVERSE:")
 print_matrix_reverse(matrix)
-
+if enable_scytale:
+    print_scytale_results(matrix, scytale_rod_sizes)
+    
 # Save Results to file
 if (alternating_direction):
     rkey0 = reverse_keyword(keyword0)
@@ -188,6 +265,5 @@ if (number_of_alphabets == "3"):
     filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1}-{rkey2})_{first_ten}.txt"
 if (number_of_alphabets == "4"):
     filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1}-{rkey2}-{rkey3})_{first_ten}.txt"
-    
-save_matrix(matrix, filename)
 
+save_matrix(matrix, filename)
