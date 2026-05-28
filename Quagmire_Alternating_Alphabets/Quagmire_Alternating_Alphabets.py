@@ -251,19 +251,21 @@ if (alternating_direction):
     rkey1 = reverse_keyword(keyword1, reverse=True)
     rkey2 = reverse_keyword(keyword2)
     rkey3 = reverse_keyword(keyword3, reverse=True)
+    alt = "_ALT"
 if not (alternating_direction):
     rkey0 = reverse_keyword(keyword0)
     rkey1 = reverse_keyword(keyword1)
     rkey2 = reverse_keyword(keyword2)
     rkey3 = reverse_keyword(keyword3)
+    alt = ""
 
 if (number_of_alphabets == "1"):    
-    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0})_{first_ten}.txt"
+    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0})_{first_ten}{alt}.txt"
 if (number_of_alphabets == "2"):
-    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1})_{first_ten}.txt"
+    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1})_{first_ten}{alt}.txt"
 if (number_of_alphabets == "3"):
-    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1}-{rkey2})_{first_ten}.txt"
+    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1}-{rkey2})_{first_ten}{alt}.txt"
 if (number_of_alphabets == "4"):
-    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1}-{rkey2}-{rkey3})_{first_ten}.txt"
+    filename = f"Quagmire Alternating Alphabets Results\{ciphertext_mode}_({rkey0}-{rkey1}-{rkey2}-{rkey3})_{first_ten}{alt}.txt"
 
 save_matrix(matrix, filename)
