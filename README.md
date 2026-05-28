@@ -2,8 +2,8 @@
 Python Scripts involving classical cryptography
 
 ### Methods such as:
-- Caesar
-- Progressive Caesar
+- Caesar Brute Force (All 26 possible results)
+- Progressive Caesar Brute Force (All 52 possible matrices)
 - Quagmire III & IV
 - Vigenere
 
