@@ -25,8 +25,13 @@ ciphertext_mode = "K1"
 
 # For adding custom variations that can be switched to with ciphertext mode switch
 # Either single or double spaced works
-if (ciphertext_mode == "CUSTOM"):
-    ciphertext = "T G G S H Q A M C X Z K P K C S Z J T H L E B P A B I E Q H A B I B N V W H R H B F I B I E M Y N C C G F J O V B R N N S N S P"
+if (ciphertext_mode == "DEMONSTRATION"):
+    ciphertext = "W L Y N P A E K A R B A B P N A E Z K X T E E C Y B K A L M L R D M S R S F D B R W Q B S H H F C U W K I K A F K R B O D K I S F Z L O J U T V X K S B U G W C Q B D"
+    cryptography_mode = "DECRYPT"
+    QUAGMIRE_MODE = "4"
+    row_keyword = "KRYPTOS"
+    vertical_keyword = "PALIMPSEST"
+    top_keyword = "MEDUSA"
 if (ciphertext_mode == "K1"):
     ciphertext = "EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD"
 if (ciphertext_mode == "K2"):
