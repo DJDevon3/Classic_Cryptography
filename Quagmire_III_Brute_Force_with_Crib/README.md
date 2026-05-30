@@ -18,7 +18,7 @@ To run the script simply use command prompt and point python to where the script
 - It will then run the program, print out the matrix to the prompt, and save a text file with the results. 
 
 Example 1 (Console Print):
-
+![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_Brute_Force_with_Crib/Brute_Force_Crib_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_Brute_Force_with_Crib/Brute_Force_Crib_Example.PNG)
 
 Example 2 (Opened Text File):
-
+![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_Brute_Force_with_Crib/Brute_Force_Crib_Example2.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_Brute_Force_with_Crib/Brute_Force_Crib_Example2.PNG)
