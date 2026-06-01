@@ -6,6 +6,7 @@ If you use a keyword it will translate it to a numerical offset and offset the r
 # What is a progressive Caesar? 
 - It reads each consecutive previous matrix diagonally and produces the results horizontally. It iterates through 26 times, once for each letter of the English alphabet. No more trying to read matrices diagonally is needed. The script makes all 26 possible diagonal permutations visible horizontally both forward and reversed. 
 
+Example: This is Kryptos K1 decrypted using the correct keyword. As you can see a Vigenere cipher is simply a Caesar cipher with a keyword. 
 ![https://raw.githubusercontent.com/DJDevon3/Classic_Cryptography/refs/heads/main/Progressive_Caesar_Matrix/Example.PNG](https://raw.githubusercontent.com/DJDevon3/Classic_Cryptography/refs/heads/main/Progressive_Caesar_Matrix/Example.PNG)
 
 # Usage:
