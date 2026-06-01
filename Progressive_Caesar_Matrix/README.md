@@ -38,7 +38,7 @@ filename = f"{ciphertext_mode}-{first_five}-{safe_alpha}-{safe_key}.txt"
 
 One of the really neat aspects of a full printout of the entirety of every possible progressive matrix is it naturally shifts from positive increments to negative increments halfway through beginning at Matrix #13. So +13 also becomes -13. In fact 0 to +25 is also 0 to -25. There is no need to specify an increment because it covers every possible sequential increment as a natural course of the method. A progressive Caesar is one of the most beautifully symetrical cryptography methods.
 
-Here is an example of how it shifts from positive to negative naturally. It doesn't matter how long your ciphertext is it will do it as a course of the method itself. This short example only uses 13 characters so that all 26 matrices can be shown in 1 screenshot. 
+Here is an example of how it shifts from positive to negative naturally. Ciphertext length does not matter, it will do this naturally as part of the progression method. This short example only uses 13 characters so that all 26 matrices can be shown in 1 screenshot. Yes, I highlighted every single character shift manually to be easier to follow along. It was a tedious process with the snipping tool. 
 ![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Progressive_Caesar_Matrix/Progressive_Caesar_Example_Shift.png](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Progressive_Caesar_Matrix/Progressive_Caesar_Example_Shift.png)
 
 # Progressive Caesar plus Scytale:
