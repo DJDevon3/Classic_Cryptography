@@ -1,44 +1,102 @@
-# SPDX-FileCopyrightText: 2025 DJDevon3
+# SPDX-FileCopyrightText: 2026 DJDevon3
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
-"""Progressive Caesar Matrix 2025-12-01"""
+"""Progressive Caesar Matrix 2026-06-01"""
+
+import os
 
 # -------------------------------------------------------------
 # Configuration
+# To shift in chunks use a keyword like AAAAABBBBCCCC
 # -------------------------------------------------------------
-# For attacking K4 change mode to K4. K1 is a demonstration mode. 
-plaintext_mode = "K1"
-alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-keyword = "PALIMPSEST"
-pattern = ""
+ciphertext_mode = "K4"
+alphabet_mode = "3"
+keyword = "AAABBBCCCDDD"
 
-# To include keyword shift in progressive matrix set TRUE
-# This is basically a multiplicative progressive process
-# This method is much harder to follow by eye
+# This is an additional optional multiplicative progressive process
+# This method is much harder to understand or follow by eye
 # Recommend keeping this set to False
-progressive_keyword = False 
+multiplicative_process = False 
 
-#alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-#alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-#alphabet = "ZYXWVUTSRQPONMABCDEFGHIJKL"
-#alphabet = "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
-#alphabet = "PALIMSETBCDFGHJKNOQRUVWXYZ"
-#alphabet = "MAGNETICBDFHJKLOPQRSUVWXYZ"
-#alphabet = "ANTIPODESBCFGHJKLMQRUVWXYZ"
-#alphabet = "ARTICHOKEBDFGJLMNPQSUVWXYZ"
-#alphabet = "HYDRAULICBEFGJKMNOPQSTVWXZ"
-#alphabet = "HYDRABCEFGIJKLMNOPQSTUVWXZ"
-#alphabet = "CENTRALIGYBDFHJKMOPQSUVWXZ"
-#alphabet = "JIMSANBORCDEFGHKLPQTUVWXYZ"
-#alphabet = "BDFHJLNPRTVXZACEGIKMOQSUWY" # split in half, equadistant split. 
-#alphabet = "ZXVTRPNLJHFDBACEGIKMOQSUWY" # split in half, equadistant from middle. 
+def get_ciphertext(ciphertext_mode):
+    """
+    Customizable ciphertext mode for manual quick switching
+    Can be single or double spaced, lower or upper case.
+    """
+    ciphertexts = {
+        # BEAUFORT:JUDGEYENOTLEASTYEBEJUDGED:KRYPTOSABCDEFGHIJLMNQUVWXZ:EXAMPLEOFABEAUFORTCIPHERINLENGTHFORREVERSEKEYWORDSEARCHESOFANUNKNOWNLENGTHTOAPPROXIMATEFINDINGKEYSANDCLUESANDINABOXOFSALTROCKSMAYBEGYPSUMORCALCITEORMAYBENOT 
+        "CUSTOM":
+            "QNPNXXYSMWSKPKSPDWNJMZKPJXNKBYCWMZGDZZAAOJYQNJSPUEZTKSZKXZYTLKZBMVOFTYMLRPSSQFDDZSZNPLAVVBMJYKENPEPMLSVJNXAMKSZRPVTKCATGRJOYRCUTYVPXBMFGNVRVHVYIRSODCBEPNECA",
 
-# - Attempted Reverse Engineer Plaintext Alphabets 
-#alphabet = "FELARSVTQNPUBCDGHIJKMOYZWX"
-#alphabet = "JKFELARSVTQNOPWBCDGHIMUXYZ"
-#alphabet = "QPORTNHGEKASBCDFIJLMUVWXYZ"
-#alphabet = "NBYEPRVLTIMCZFOADGHJKQSUWX"
-#alphabet = "TIMNZCFLPOWKYBVRADEGHJQSUX"
+        "K1":
+            "EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD",
+
+        "K2":
+            "VFPJUDEEHZWETZYVGWHKKQETGFQJNCEGGWHKKDQMCPFQZDQMMIAGPFXHQRLGTIMVMZJANQLVKQEDAGDVFRPJUNGEUNAQZGZLECGYUXUEENJTBJLBQCRTBJDFHRRYIZETKZEMVDUFKSJHKFWHKUWQLSZFTIHHDDDUVHDWKBFUFPWNTDFIYCUQZEREEVLDKFEZMOQQJLTTUGSYQPFEUNLAVIDXFLGGTEZFKZBSFDQVGOGIPUFXHHDRKFFHQNTGPUAECNUVPDJMQCLQUMUNEDFQELZZVRRGKFFVOEEXBDMVPNFQXEZLGREDNQFMPNZGLFLPMRJQYALMGNUVPDXVKPDQUMEBEDMHDAFMJGZNUPLGEWJLLAETG",
+
+        "K4":
+            "O B K R U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P V T T M Z F P K W G D K Z X T J C D I G K U H U A U E K C A R",
+
+        "K4_REVERSE":
+            "R A C K E U A U H U K G I D C J T X Z K D G W K P F Z M T T V P Y N B F N I W A I D U L K J T A W Z Z K E S S Q J S Q T W T O S S K G N R P Q Q V R L F W B B F I L O S B L U H G O X O U R K B O",
+
+        "K4_SNAKE_REVERSE":
+            "V T T M Z F P K W G D K Z X T J C D I G K U H U A U E K C A R P Y N B F N I W A I D U L K J T A W Z Z K E S S Q J S Q T W T U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O R K B O"
+            
+    }
+    return ciphertexts.get(ciphertext_mode)
+
+def custom_alphabet(num):
+    """
+    Customizable alphabets for manual quick switching
+    """
+    if (num == "1"):
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    if (num == "2"):
+        alphabet = "ZYXWVUTSRQPONMLKJIHGFEDCBA"
+    if (num == "3"):
+        alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
+    if (num == "4"):
+        alphabet = "ZXWVUQNMLJIHGFEDCBASOTPYRK"
+    if (num == "5"):
+        alphabet = "ABSCIDEFGHJKLMNOPQRTUVWXYZ"
+    if (num == "6"):
+        alphabet = "PALIMSETBCDFGHJKNOQRUVWXYZ"
+    if (num == "7"):
+        alphabet = "MEDUSABCFGHIJKLNOPQRTVWXYZ"
+    if (num == "8"):
+        alphabet = "MAGNETICBDFHJKLOPQRSUVWXYZ"
+    if (num == "9"):
+        alphabet = "ANTIPODESBCFGHJKLMQRUVWXYZ"
+    if (num == "10"):
+        alphabet = "ARTICHOKEBDFGJLMNPQSUVWXYZ"
+    if (num == "11"):
+        alphabet = "HYDRABCEFGIJKLMNOPQSTUVWXZ"
+    if (num == "12"):
+        alphabet = "HYDRAULICSBEFGJKMNOPQTVWXZ"
+    if (num == "13"):
+        alphabet = "CENTRALIGYBDFHJKMOPQSUVWXZ"
+    if (num == "14"):
+        alphabet = "JIMSANBORCDEFGHKLPQTUVWXYZ"
+    if (num == "15"):
+        alphabet = "PYTHONABCDEFGIJKLMQRSUVWXZ"
+    if (num == "16"):
+        alphabet = "BDFHJLNPRTVXZACEGIKMOQSUWY" # split in half, equadistant split.
+    if (num == "17"):
+        alphabet = "ZXVTRPNLJHFDBACEGIKMOQSUWY" # split in half, equadistant from middle. 
+        
+    # - Attempted Reverse Engineer Plaintext Alphabets 
+    if (num == "18"):
+        alphabet = "FELARSVTQNPUBCDGHIJKMOYZWX"
+    if (num == "19"):
+        alphabet = "JKFELARSVTQNOPWBCDGHIMUXYZ"
+    if (num == "20"):
+        alphabet = "QPORTNHGEKASBCDFIJLMUVWXYZ"
+    if (num == "21"):
+        alphabet = "NBYEPRVLTIMCZFOADGHJKQSUWX"
+    if (num == "22"):
+        alphabet = "TIMNZCFLPOWKYBVRADEGHJQSUX"
+    return alphabet
 
 # ======== MORSE CODE ================
 """
@@ -56,13 +114,15 @@ S O S
 R Q
 """
 
+# -------------------------------------------------------------
+# 1) Utility Functions
+# -------------------------------------------------------------
 def make_safe_filename(s):
     """Remove characters not allowed in Windows filenames."""
     unsafe = '<>:"/\\|?*'
     for ch in unsafe:
         s = s.replace(ch, "")
     return s
-
 
 def make_shifts_from_keyword(keyword, alphabet):
     """Convert keyword into a list of numeric shifts based on the custom alphabet."""
@@ -71,46 +131,19 @@ def make_shifts_from_keyword(keyword, alphabet):
         if c in alphabet:
             shifts.append(alphabet.index(c))
     return shifts if shifts else [0]   # fallback to shift 0 if keyword invalid
-    
-# -------------------------------------------------------------
-# Pattern Checking (no highlighting)
-# -------------------------------------------------------------
-def check_pattern_both(text, pattern):
-    """Return match flags and the original text (no highlighting)."""
-    t = text.upper()
-    p = pattern.upper().strip()
-
-    if not p:
-        return False, False, text
-
-    forward = p in t
-    reverse = p[::-1] in t
-
-    return forward, reverse, text
-
-
-def pattern_label(forward, reverse):
-    if forward and reverse:
-        return "   <-- MATCH (FWD & REV)"
-    if forward:
-        return "   <-- MATCH (FWD)"
-    if reverse:
-        return "   <-- MATCH (REV)"
-    return ""
 
 def write_line(f, text):
     f.write(text + "\n")
+    
 # -------------------------------------------------------------
-# 1) Brute Caesar Matrix (fixed shift per row)
+# Brute Caesar Matrix (fixed shift per row)
 # -------------------------------------------------------------
-def caesar_matrix(text, alphabet, keyword, pattern, collector):
+def caesar_matrix(text, alphabet, keyword, collector):
     alphabet = alphabet.upper()
     text = text.upper()
-
     key_shifts = make_shifts_from_keyword(keyword, alphabet)
     key_len = len(key_shifts)
     L = len(alphabet)
-        
     header = f"====================== Brute Caesar Matrix (Alphabet:{alphabet} Keyword:{keyword}) ======================"
     print(header)
     collector.append(header)
@@ -129,19 +162,17 @@ def caesar_matrix(text, alphabet, keyword, pattern, collector):
             else:
                 result += char
 
-        forward, reverse, raw = check_pattern_both(result, pattern)
-        label = pattern_label(forward, reverse)
-
-        line = f"{raw}{label}"
+        line = f"{result}"
         print(line)
         collector.append(line)
 
-
 # -------------------------------------------------------------
-# 2) Progressive Caesar Decode
+# Progressive Caesar Base Decoder
 # -------------------------------------------------------------
 def progressive_caesar(text, alphabet, start_shift, keyword=""):
-    """Progressive Caesar decode. Keyword optional: if empty, only numeric shifting occurs."""
+    """
+    Progressive Caesar decode. Keyword optional: if empty, only numeric shifting occurs.
+    """
     alphabet = alphabet.upper()
     text = text.upper()
 
@@ -164,18 +195,15 @@ def progressive_caesar(text, alphabet, start_shift, keyword=""):
             i += 1
         else:
             result += char
-
     return result
-
 
 # -------------------------------------------------------------
 # 3) Progressive Caesar – Full 26 matrices
 # -------------------------------------------------------------
-def progressive_caesar_all_matrices(text, alphabet, keyword, pattern, iterations, collector):
+def progressive_caesar_all_matrices(text, alphabet, keyword, iterations, collector):
     alphabet = alphabet.upper()
     text = text.upper()
-
-    current_text = text  # initial input
+    current_text = text
 
     for iter_no in range(iterations):
         header1 = ""
@@ -193,10 +221,7 @@ def progressive_caesar_all_matrices(text, alphabet, keyword, pattern, iterations
             decoded = progressive_caesar(current_text, alphabet, start, keyword)
             matrix_rows.append(decoded)
 
-            forward, reverse, raw = check_pattern_both(decoded, pattern)
-            label = pattern_label(forward, reverse)
-
-            line = f"{raw}{label}"
+            line = f"{matrix_rows}"
             print(line)
             collector.append(line)
 
@@ -207,7 +232,9 @@ def progressive_caesar_all_matrices(text, alphabet, keyword, pattern, iterations
 # Pure Progressive Caesar (no keyword)
 # -------------------------------------------------------------
 def pure_progressive_caesar(text, alphabet, start_shift):
-    """Pure progressive Caesar: shift sequence = start, start-1, start-2, ..."""
+    """
+    Pure progressive Caesar: shift sequence = start, start-1, start-2, ...
+    """
     alphabet = alphabet.upper()
     text = text.upper()
 
@@ -229,11 +256,10 @@ def pure_progressive_caesar(text, alphabet, start_shift):
 
     return result
 
-
 # -------------------------------------------------------------
 # Build matrices using pure progressive (no keyword)
 # -------------------------------------------------------------
-def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, pattern, iterations, collector):
+def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, iterations, collector):
     alphabet = alphabet.upper()
     text = text.upper()
 
@@ -255,99 +281,72 @@ def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, pattern, ite
         for start in range(len(alphabet)):
             decoded = pure_progressive_caesar(current_text, alphabet, start)
             matrix_rows.append(decoded)
-
-            forward, reverse, raw = check_pattern_both(decoded, pattern)
-            label = pattern_label(forward, reverse)
-
-            line = f"{raw}{label}"
+            line = f"{decoded}"
             print(line)
             collector.append(line)
 
         # next iteration uses row 0
         current_text = matrix_rows[0]
 
-# ========= HARDCODED MODES ============
-#------K4
-if (plaintext_mode == "K4"):
-    plaintext_F = "O B K R U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P V T T M Z F P K W G D K Z X T J C D I G K U H U A U E K C A R"
-if (plaintext_mode == "K4_1"):
-    plaintext_F = "O B K R U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O T"
-if (plaintext_mode == "K4_2"):
-    plaintext_F = "W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P V T T M Z F"
-if (plaintext_mode == "K4_3"):
-    plaintext_F = "P K W G D K Z X T J C D I G K U H U A U E K C A R"
-#------K4 PLAINTEXT CRIB WORDS
-if (plaintext_mode == "K4_CRIB"):
-    plaintext_F = "X X X X X X X X X X X X X X X X X X X X X E A S T N O R T H E A S T X X X X X X X X X X X X X X X X X X X X X X X X X X X X X B E R L I N C L O C K X X X X X X X X X X X X X X X X X X X X X X X"
-#------K4 PLAINTEXT X'S
-if (plaintext_mode == "K4_X"):
-    plaintext_F = "X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X"
-#------K4 Snake Route Transposition
-if (plaintext_mode == "K4_SNAKE"):
-    plaintext_F = "R O B K R O S S K G N R P Q Q V R L F W B B F I L O S B L U H G O X O U T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P R A C K E U A U H U K G I D C J T X Z K D G W K P F Z M T T V"
-#------K1 Keyword: PALIMPSEST
-if (plaintext_mode == "K1"):
-    plaintext_F = "EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD" 
-    alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-    keyword = "PALIMPSEST"
-#------K2 Keyword: ABSCISSA
-if (plaintext_mode == "K2"): 
-    plaintext_F = "VFPJUDEEHZWETZYVGWHKKQETGFQJNCEGGWHKKDQMCPFQZDQMMIAGPFXHQRLGTIMVMZJANQLVKQEDAGDVFRPJUNGEUNAQZGZLECGYUXUEENJTBJLBQCRTBJDFHRRYIZETKZEMVDUFKSJHKFWHKUWQLSZFTIHHDDDUVHDWKBFUFPWNTDFIYCUQZEREEVLDKFEZMOQQJLTTUGSYQPFEUNLAVIDXFLGGTEZFKZBSFDQVGOGIPUFXHHDRKFFHQNTGPUAECNUVPDJMQCLQUMUNEDFQELZZVRRGKFFVOEEXBDMVPNFQXEZLGREDNQFMPNZGLFLPMRJQYALMGNUVPDXVKPDQUMEBEDMHDAFMJGZNUPLGEWJLLAETG"
-    alphabet = "KRYPTOSABCDEFGHIJLMNQUVWXZ"
-    keyword = "ABSCISSA"
+def output(text, file_handle=None):
+    """
+    Print to console and optionally save to file.
+    """
+    print(text)
 
-#------Reverse of all forward plaintext
-plaintext_R = plaintext_F[::-1]
+    if file_handle:
+        file_handle.write(str(text) + "\n")
+        
+# ========= Alphabet & Ciphertext Mode Switch ============
+alphabet = custom_alphabet(alphabet_mode)
+ciphertext = get_ciphertext(ciphertext_mode)
+ciphertext_R = ciphertext[::-1] # Reverse
 
 # Collector list for file output
-strip_spaces_FS = plaintext_F.replace(" ", "")
+strip_spaces_FS = ciphertext.replace(" ", "")
 plaintext_FS = " ".join(strip_spaces_FS)
-strip_spaces_RS = plaintext_R.replace(" ", "")
+strip_spaces_RS = ciphertext_R.replace(" ", "")
 plaintext_RS = " ".join(strip_spaces_RS)
 output_lines_F = []
 output_lines_R = []
 
-# Run 2 modes Forwards
-caesar_matrix(plaintext_FS, alphabet, keyword, pattern, output_lines_F)
-caesar_matrix(plaintext_RS, alphabet, keyword, pattern, output_lines_R)
-if progressive_keyword:
-    progressive_caesar_all_matrices(plaintext_FS, alphabet, keyword, pattern, iterations=26, collector=output_lines_F)
-    progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, pattern, iterations=26, collector=output_lines_R)
-else:
-    # Run pure progressive
-    brute_row_zero_F = output_lines_F[1].strip()  # adjust if needed
-    pure_progressive_caesar_all_matrices(plaintext_FS, brute_row_zero_F,alphabet,pattern,iterations=26,collector=output_lines_F)
-    brute_row_zero_R = output_lines_R[1].strip()
-    pure_progressive_caesar_all_matrices(plaintext_RS, brute_row_zero_R,alphabet,pattern,iterations=26,collector=output_lines_R)
+# ========= Run Caesar Run ============ 
+caesar_matrix(plaintext_FS, alphabet, keyword, output_lines_F)
+caesar_matrix(plaintext_RS, alphabet, keyword, output_lines_R)
 
-# Save Alphabet & Key
+if multiplicative_process:
+    # Run Multiplicative Progressive Caesar
+    progressive_caesar_all_matrices(plaintext_FS, alphabet, keyword, iterations=26, collector=output_lines_F)
+    progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, iterations=26, collector=output_lines_R)
+else:
+    # Run Pure Progressive Caesar
+    brute_row_zero_F = output_lines_F[1].strip()
+    pure_progressive_caesar_all_matrices(plaintext_FS, brute_row_zero_F,alphabet,iterations=26,collector=output_lines_F)
+    brute_row_zero_R = output_lines_R[1].strip()
+    pure_progressive_caesar_all_matrices(plaintext_RS, brute_row_zero_R,alphabet,iterations=26,collector=output_lines_R)
+
+# ========= Save Results to file ============ 
 safe_alpha = make_safe_filename(alphabet)
 safe_key = make_safe_filename(keyword) if keyword else "NONE"
-
-# FORWARD Strip Spaces and Truncate for filename
-strip_spaces = plaintext_F.replace(" ", "")
+strip_spaces = ciphertext.replace(" ", "")
 first_five = strip_spaces[0:5]
 
-# Save Results to file
-filename = f"Results\{plaintext_mode}-{first_five}-{safe_alpha}-{safe_key}.txt"
-
+output_dir = "Progressive Caesar Results"
+os.makedirs(output_dir, exist_ok=True)
+filename = os.path.join(output_dir,f"{ciphertext_mode}-{first_five}-{safe_alpha}-{safe_key}.txt")
 
 with open(filename, "w", encoding="utf-8") as f:
-    f.write(f"Mode: {plaintext_mode}\n")
-    f.write(f"Alphabet: {alphabet}\n")
-    f.write(f"Keyword:  {keyword}\n")
-    f.write(f"Plaintext: \n{plaintext_F}\n")
-    f.write(f"Search For:  {pattern}\n")
-    f.write("============ FORWARD =================================\n\n")
-    f.write("\n".join(output_lines_F))
-    f.write(f"\n\n")
-    f.write("============ REVERSE =================================\n\n")
-    f.write(f"Mode: {plaintext_mode}\n")
-    f.write(f"Alphabet: {alphabet}\n")
-    f.write(f"Keyword:  {keyword}\n")
-    f.write(f"Plaintext: \n{plaintext_R}\n")
-    f.write(f"Search For:  {pattern}\n")
-    f.write("---------------------------------------------\n\n")
-    f.write("\n".join(output_lines_R))
+    output(f"Mode: {ciphertext_mode}", f)
+    output(f"Alphabet: {alphabet}", f)
+    output(f"Keyword:  {keyword}", f)
+    output(f"Ciphertext: \n{ciphertext}", f)
+    output("\n".join(output_lines_F), f)
+    output(f"\n\n", f)
+    output("============ REVERSED =================================", f)
+    output(f"Mode: {ciphertext_mode}", f)
+    output(f"Alphabet: {alphabet}", f)
+    output(f"Keyword:  {keyword}", f)
+    output(f"Ciphertext: \n{ciphertext_R}", f)
+    output("\n".join(output_lines_R), f)
 
-print(f"\n\nResults saved to: {filename}")
+print(f"\nResults saved to: {filename}")
