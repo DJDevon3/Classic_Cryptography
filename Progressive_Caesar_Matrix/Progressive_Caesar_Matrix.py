@@ -8,7 +8,6 @@ import os
 # -------------------------------------------------------------
 # Configuration
 # To shift in chunks use a keyword like AAAAABBBBCCCC
-# -------------------------------------------------------------
 ciphertext_mode = "K4"
 alphabet_mode = "3"
 keyword = "AAABBBCCCDDD"
@@ -22,6 +21,7 @@ def get_ciphertext(ciphertext_mode):
     """
     Customizable ciphertext mode for manual quick switching
     Can be single or double spaced, lower or upper case.
+    Feel free to add your own!
     """
     ciphertexts = {
         # BEAUFORT:JUDGEYENOTLEASTYEBEJUDGED:KRYPTOSABCDEFGHIJLMNQUVWXZ:EXAMPLEOFABEAUFORTCIPHERINLENGTHFORREVERSEKEYWORDSEARCHESOFANUNKNOWNLENGTHTOAPPROXIMATEFINDINGKEYSANDCLUESANDINABOXOFSALTROCKSMAYBEGYPSUMORCALCITEORMAYBENOT 
@@ -49,6 +49,7 @@ def get_ciphertext(ciphertext_mode):
 def custom_alphabet(num):
     """
     Customizable alphabets for manual quick switching
+    Feel free to add your own!
     """
     if (num == "1"):
         alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -97,8 +98,10 @@ def custom_alphabet(num):
     if (num == "22"):
         alphabet = "TIMNZCFLPOWKYBVRADEGHJQSUX"
     return alphabet
+# -------------------------------------------------------------
 
-# ======== MORSE CODE ================
+
+# ======== K0 Morse Code Reference ================
 """
 E E V I R T U A L L Y E
 E E E E E E I N V I S I B L E 
@@ -115,7 +118,7 @@ R Q
 """
 
 # -------------------------------------------------------------
-# 1) Utility Functions
+# Utility Functions
 # -------------------------------------------------------------
 def make_safe_filename(s):
     """Remove characters not allowed in Windows filenames."""
@@ -171,7 +174,7 @@ def caesar_matrix(text, alphabet, keyword, collector):
 # -------------------------------------------------------------
 def progressive_caesar(text, alphabet, start_shift, keyword=""):
     """
-    Progressive Caesar decode. Keyword optional: if empty, only numeric shifting occurs.
+    Progressive Caesar decode. Keyword optional: if empty, only numeric +1n shifting occurs.
     """
     alphabet = alphabet.upper()
     text = text.upper()
@@ -198,9 +201,12 @@ def progressive_caesar(text, alphabet, start_shift, keyword=""):
     return result
 
 # -------------------------------------------------------------
-# 3) Progressive Caesar – Full 26 matrices
+# Progressive Caesar – Full 26 matrices
 # -------------------------------------------------------------
-def progressive_caesar_all_matrices(text, alphabet, keyword, iterations, collector):
+def multiplicative_caesar(text, alphabet, keyword, iterations, collector):
+    """
+    Runs progressive_caesar back upon itself for a compounding effect
+    """
     alphabet = alphabet.upper()
     text = text.upper()
     current_text = text
@@ -233,11 +239,10 @@ def progressive_caesar_all_matrices(text, alphabet, keyword, iterations, collect
 # -------------------------------------------------------------
 def pure_progressive_caesar(text, alphabet, start_shift):
     """
-    Pure progressive Caesar: shift sequence = start, start-1, start-2, ...
+    Base function to create 1 progressive Caesar matrix based on the brute force caesar
     """
     alphabet = alphabet.upper()
     text = text.upper()
-
     L = len(alphabet)
     result = ""
 
@@ -260,6 +265,9 @@ def pure_progressive_caesar(text, alphabet, start_shift):
 # Build matrices using pure progressive (no keyword)
 # -------------------------------------------------------------
 def pure_progressive_caesar_all_matrices(plaintext, text, alphabet, iterations, collector):
+    """
+    Produces all 26 possible matrices from the first pure_progressive_caesar matrix
+    """
     alphabet = alphabet.upper()
     text = text.upper()
 
@@ -302,7 +310,7 @@ alphabet = custom_alphabet(alphabet_mode)
 ciphertext = get_ciphertext(ciphertext_mode)
 ciphertext_R = ciphertext[::-1] # Reverse
 
-# Collector list for file output
+# ========= Collector list for file output ============
 strip_spaces_FS = ciphertext.replace(" ", "")
 plaintext_FS = " ".join(strip_spaces_FS)
 strip_spaces_RS = ciphertext_R.replace(" ", "")
@@ -310,16 +318,16 @@ plaintext_RS = " ".join(strip_spaces_RS)
 output_lines_F = []
 output_lines_R = []
 
-# ========= Run Caesar Run ============ 
+# ========= Run Caesar Functions ============ 
 caesar_matrix(plaintext_FS, alphabet, keyword, output_lines_F)
 caesar_matrix(plaintext_RS, alphabet, keyword, output_lines_R)
 
 if multiplicative_process:
     # Run Multiplicative Progressive Caesar
-    progressive_caesar_all_matrices(plaintext_FS, alphabet, keyword, iterations=26, collector=output_lines_F)
-    progressive_caesar_all_matrices(plaintext_RS, alphabet, keyword, iterations=26, collector=output_lines_R)
+    multiplicative_caesar(plaintext_FS, alphabet, keyword, iterations=26, collector=output_lines_F)
+    multiplicative_caesar(plaintext_RS, alphabet, keyword, iterations=26, collector=output_lines_R)
 else:
-    # Run Pure Progressive Caesar
+    # Run Pure Progressive Caesar Forward & Reverse will produce 52 iterations total
     brute_row_zero_F = output_lines_F[1].strip()
     pure_progressive_caesar_all_matrices(plaintext_FS, brute_row_zero_F,alphabet,iterations=26,collector=output_lines_F)
     brute_row_zero_R = output_lines_R[1].strip()
@@ -331,7 +339,7 @@ safe_key = make_safe_filename(keyword) if keyword else "NONE"
 strip_spaces = ciphertext.replace(" ", "")
 first_five = strip_spaces[0:5]
 
-output_dir = "Progressive Caesar Results"
+output_dir = "Progressive Caesar Results" # Folder name
 os.makedirs(output_dir, exist_ok=True)
 filename = os.path.join(output_dir,f"{ciphertext_mode}-{first_five}-{safe_alpha}-{safe_key}.txt")
 
