@@ -15,7 +15,7 @@ To run the program simply point Windows CMD prompt at the script and run with py
 ```py
 C:\Users\Devon\Documents\Kryptos Scripts>python Progressive_Caesar_Matrix.py
 ```
-It will create a text file in a folder named Results. It does not create the folder for you. Either create the folder or change the file save location at the bottom of the script. 
+It will automatically create a folder in the same directory for search result txt files to be saved to, if it does not exist. 
 
 ```py
 C:\Users\Devon\Documents\Kryptos Scripts\Results
