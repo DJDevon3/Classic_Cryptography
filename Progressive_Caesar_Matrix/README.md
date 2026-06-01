@@ -18,7 +18,7 @@ C:\Users\Devon\Documents\Kryptos Scripts>python Progressive_Caesar_Matrix.py
 It will automatically create a folder in the same directory for search result txt files to be saved to, if it does not exist. 
 
 ```py
-C:\Users\Devon\Documents\Kryptos Scripts\Results
+C:\Users\Devon\Documents\Kryptos Scripts\Progressive Caesar Results
 ```
 It will generate 1 file with both forward and reverse matrices results. This should make searching single files easier than multiple files. 
 
