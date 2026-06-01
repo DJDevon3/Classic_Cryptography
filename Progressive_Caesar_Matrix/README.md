@@ -25,12 +25,13 @@ C:\Users\Devon\Documents\Kryptos Scripts\Progressive Caesar Results
 It will generate 1 file with both forward and reverse matrices results. This should make searching single files easier than multiple files. 
 
 ### Filename:
-- First five characters of your plaintext/ciphertext
+- Custom mode (ciphertext) you are using
+- First five characters of your ciphertext
 - Full alphabet used
 - Keyword. If no keyword is used it will be "-NONE".
 
 ```py
-filename = f"Results\{first_five}-{safe_alpha}-{safe_key}.txt"
+filename = f"{ciphertext_mode}-{first_five}-{safe_alpha}-{safe_key}.txt"
 ```
 
 # Progressive Caesar Incrementing (0, 1, 2, 3 OR 0,-1,-2,-3):
