@@ -9,6 +9,7 @@ import os
 import string
 import math
 from pathlib import Path
+from collections import Counter
 STD = string.ascii_uppercase
 
 """
@@ -19,18 +20,24 @@ top keyword only used in mode 4
 """
 QUAGMIRE_MODE = "4" # Valid modes: 3 or 4
 cryptography_mode = "DECRYPT" # Valid modes: ENCRYPT or DECRYPT
+
+ciphertext_mode = "K4"
 row_keyword = "KRYPTOS"
-vertical_keyword = "PALIMPSEST"
-top_keyword = "KRYPTOS" # Only used with Quagmire 4
-ciphertext_mode = "K1"
+vertical_keyword = "KRYPTOS"
+
+# Only used with Quagmire 4
+top_keyword = "KRYPTOS"
+
+# Check for enough character counts in result
+minimum_characters="EASTNORTHEASTBERLINCLOCK"
 
 # Optional Additional Scytale Post-Processing
 enable_scytale = False
 scytale_rod_sizes = list(range(1, 15))
 
 # Optional Additional Skip Transposition Post-Processing
-enable_skip = False
-skip_sizes = list(range(1, 15))
+enable_skip = True
+skip_sizes = list(range(1, 25))
  
 if (ciphertext_mode == "CUSTOM"):
     ciphertext = "UNZLSELLXVHVIFYHBJHVWCIWXRZXYXUFYJPQVIUUUSLTWWZLWQITW"
@@ -102,6 +109,19 @@ def output(text, file_handle=None):
     if file_handle:
         file_handle.write(str(text) + "\n")
 
+def phrase_deficit(text, phrase=minimum_characters):
+    """
+    Checks if enough characters are present in ciphertext
+    """
+    text_counts = Counter(text.upper())
+    phrase_counts = Counter(phrase.upper())
+    missing = {}
+    for letter, needed in phrase_counts.items():
+        have = text_counts.get(letter, 0)
+        if have < needed:
+            missing[letter] = needed - have
+
+    return missing
 # =========================================================
 # Build Tableau
 # =========================================================
@@ -146,7 +166,14 @@ def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword
     if (cryptography_mode == "DECRYPT"):
         lines.append("\nCiphertext")
         lines.append(double_space(ciphertext_clean))
-        lines.append("\nPlaintext (Decrypted)")
+        
+        # Check for expected crib word character counts
+        missing = phrase_deficit(plaintext)
+        if missing:
+            lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Fail ({minimum_characters}) {missing}")
+        else:
+            lines.append("\nPlaintext (Decrypted) Minimum Characters: Pass")
+            
         lines.append(double_space(plaintext))
     if (cryptography_mode == "ENCRYPT"):
         lines.append("\nPlaintext")
@@ -260,7 +287,7 @@ def get_skip_results(text, skip_sizes):
     for skip in skip_sizes:
         result = skip_transposition(text, skip)
         spaced = " ".join(result)
-        lines.append(f"\nSkip:{skip:02} | {spaced}")
+        lines.append(f"\nSkip:{skip:02}\n{spaced}")
     return "\n".join(lines)
     
 # ==========================================
@@ -294,10 +321,11 @@ filename = os.path.join(output_dir,f"{cryptography_mode}_Q{QUAGMIRE_MODE.replace
 with open(filename, "w", encoding="utf-8") as f:
     output("=" * 45, f)
     output(f"Method: {cryptography_mode}", f)
+    output(f"Quagmire Mode: {QUAGMIRE_MODE.replace(' ', '_')}", f)
     output(f"Top Alphabet: {top_alphabet}", f)
     output(f"Row Alphabet: {row_alphabet}", f)
     output(f"Vertical Keyword: {vertical_keyword}", f)
-    output(f"Custom Mode: {QUAGMIRE_MODE.replace(' ', '_')}", f)
+    output(f"Ciphertext Mode Name: {ciphertext_mode}", f)
     output(f"Ciphertext: {ciphertext}", f)
     output(f"Ciphertext Length: {len(ciphertext)}\n", f)
     output(f"{tableau_output}", f)
