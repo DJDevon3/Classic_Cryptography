@@ -23,10 +23,10 @@ cryptography_mode = "DECRYPT" # Valid modes: ENCRYPT or DECRYPT
 
 ciphertext_mode = "K4"
 row_keyword = "KRYPTOS"
-vertical_keyword = "KRYPTOS"
+vertical_keyword = "PALIMPSEST"
 
 # Only used with Quagmire 4
-top_keyword = "KRYPTOS"
+top_keyword = "ABC"
 
 # Check for enough character counts in result
 minimum_characters="EASTNORTHEASTBERLINCLOCK"
@@ -172,7 +172,7 @@ def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword
         if missing:
             lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Fail ({minimum_characters}) {missing}")
         else:
-            lines.append("\nPlaintext (Decrypted) Minimum Characters: Pass")
+            lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Pass ({minimum_characters})")
             
         lines.append(double_space(plaintext))
     if (cryptography_mode == "ENCRYPT"):
