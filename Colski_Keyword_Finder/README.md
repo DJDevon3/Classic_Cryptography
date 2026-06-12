@@ -1,0 +1,16 @@
+# Colski Keyword Finder
+Can sometimes find keywords in Kryptos K2 style ciphertext
+
+### Customizable:
+- Keyworded Alphabets
+- Displays potential candidate keywords in length you choose
+- Saves Results to File
+
+
+### Usage:
+To run the script simply use command prompt and point python to where the script is located. Here is an example of a command:
+- C:\Users\Devon\Documents\Kryptos Scripts>python Colski_Keyword_Finder.py
+- It will then run the program, print out the matrix to the prompt, and save a text file with the results. 
+
+Example (Console Print):
+![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Console_Print_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Console_Print_Example.PNG)
