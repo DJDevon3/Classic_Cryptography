@@ -21,3 +21,6 @@ Example 1 (Console Print):
 
 Example 2 (Opened Text File):
 ![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Text_File_Save_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Text_File_Save_Example.PNG)
+
+Example 3 (Paradigm Kryptos Cryptography Challenge): A real world crack using this tool in a cryptography challenge
+![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Provenance_PK1_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Provenance_PK1_Example.PNG)
