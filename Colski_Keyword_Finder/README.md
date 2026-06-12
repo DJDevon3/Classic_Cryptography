@@ -1,5 +1,5 @@
 # Colski Keyword Finder
-Can sometimes find keywords in Kryptos K2 style ciphertext
+Can sometimes find keywords in Quagmire III ciphertext. It's not infallable but it does work sometimes, quite well. 
 
 ### Customizable:
 - Keyworded Alphabets
