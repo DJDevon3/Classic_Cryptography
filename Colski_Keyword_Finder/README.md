@@ -3,7 +3,7 @@ Can sometimes find keywords in Quagmire III ciphertext. It's not infalliable but
 
 ### Customizable:
 - Keyworded Alphabets
-- Displays potential candidate keywords in length you choose
+- Displays potential candidate keywords to a maximum length you choose
 - Saves Results to File
 
 
