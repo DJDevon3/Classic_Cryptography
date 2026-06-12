@@ -12,5 +12,5 @@ To run the script simply use command prompt and point python to where the script
 - C:\Users\Devon\Documents\Kryptos Scripts>python Colski_Keyword_Finder.py
 - It will then run the program, print out the matrix to the prompt, and save a text file with the results. 
 
-Example (Console Print):
-![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Console_Print_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Console_Print_Example.PNG)
+Example (Console Print): Paradigm Kryptos PK1 cryptography challenge (cracked in milliseconds)
+![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Colski_Keyword_Finder/Colski_Keyword_Finder_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Colski_Keyword_Finder/Colski_Keyword_Finder_Example.PNG)
