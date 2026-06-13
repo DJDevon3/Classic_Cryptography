@@ -1,5 +1,5 @@
 # Colski Keyword Finder
-Can sometimes find keywords in Quagmire III ciphertext. It's not infalliable but it does work sometimes, quite well. Original script by Reddit user Colski. I've modified it with customizable parameters, file saving, etc..
+Can sometimes find Quagmire III keyword. It's not infalliable but it does work sometimes, quite well. Original script by Reddit user Colski. I've modified it with customizable parameters, file saving, etc.. It does not do well on non-vigenere style polyalphabetic ciphers. 
 
 ### Customizable:
 - Keyworded alphabet
