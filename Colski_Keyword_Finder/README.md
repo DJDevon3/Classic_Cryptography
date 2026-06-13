@@ -6,6 +6,7 @@ Can sometimes find Quagmire III keyword. It's not infalliable but it does work s
 - Frequency analysis on ciphertext
 - Displays potential candidate keywords to a maximum length you choose
 - Prints results to console & saves results to txt file
+- Demonstrations for Kryptos K1, K2, and PK1 included. It finds the keyword instantly. 
 
 
 ### Usage:
