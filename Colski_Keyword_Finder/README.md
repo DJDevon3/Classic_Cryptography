@@ -2,9 +2,10 @@
 Can sometimes find keywords in Quagmire III ciphertext. It's not infalliable but it does work sometimes, quite well. Original script by Reddit user Colski. I've modified it with customizable parameters, file saving, etc..
 
 ### Customizable:
-- Keyworded Alphabet
+- Keyworded alphabet
+- Frequency analysis on ciphertext
 - Displays potential candidate keywords to a maximum length you choose
-- Saves Results to File
+- Prints results to console & saves results to txt file
 
 
 ### Usage:
