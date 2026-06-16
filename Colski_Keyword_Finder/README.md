@@ -1,10 +1,12 @@
-# Colski Keyword Finder
-Can sometimes find keywords in Quagmire III ciphertext. It's not infalliable but it does work sometimes, quite well. Original script by Reddit user Colski. I've modified it with customizable parameters, file saving, etc..
+# Colski Quagmire III Keyword Finder
+Can sometimes find Quagmire III keyword. It's not infalliable but it does work sometimes, quite well. Original script by Reddit user Colski. I've modified it with customizable parameters, file saving, etc.. It does not do well on non-vigenere style polyalphabetic ciphers. 
 
 ### Customizable:
-- Keyworded Alphabet
+- Keyworded alphabet
+- Frequency analysis on ciphertext
 - Displays potential candidate keywords to a maximum length you choose
-- Saves Results to File
+- Prints results to console & saves results to txt file
+- Demonstrations for Kryptos K1, K2, and [Paradigm's PK1 CTF challenge](https://paradigm.xyz/kryptos-ctf/pk1) included. It finds the keyword instantly. 
 
 
 ### Usage:
