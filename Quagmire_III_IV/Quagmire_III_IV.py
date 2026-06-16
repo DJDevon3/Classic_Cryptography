@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 # Coded for Python 3.10.5
 """
-ACA Quagmire III & IV Encrypt & Decrypt 2026-06-02
+ACA Quagmire II, III & IV Encrypt & Decrypt 2026-06-16
 """
 
 import os
@@ -15,20 +15,22 @@ STD = string.ascii_uppercase
 """
 =========================================================
 CONFIGURATION PARAMETERS
-top keyworded alphabet is row keyword in mode 3
-top keyword only used in mode 4
+top keyworded alphabet = row keyword in mode 3
+top keyword only unique in mode 4
 """
-QUAGMIRE_MODE = "4" # Valid modes: 3 or 4
+QUAGMIRE_MODE = "3" # Valid modes: 3 or 4
 cryptography_mode = "DECRYPT" # Valid modes: ENCRYPT or DECRYPT
 
-ciphertext_mode = "K4"
-row_keyword = "KRYPTOS"
-vertical_keyword = "PALIMPSEST"
+ciphertext_mode = "Quagmire_II_Demo"
+row_keyword = "KRYPTOS" # Alphabet generated from keyword
+vertical_keyword = "ABSCISSA" # Repeated vigenere style keyword
 
-# Only used with Quagmire 4
-top_keyword = "ABC"
+# Hard coded lower in script as ABC for QUAGMIRE_MODE 2 
+# Top Keyword only ever customizable with QUAGMIRE_MODE 4
+top_keyword = "CUSTOMKEYWORD"
 
-# Check for enough character counts in result
+# Check for enough character counts in K4 result
+enable_minimum_K4_characters = False
 minimum_characters="EASTNORTHEASTBERLINCLOCK"
 
 # Optional Additional Scytale Post-Processing
@@ -36,35 +38,71 @@ enable_scytale = False
 scytale_rod_sizes = list(range(1, 15))
 
 # Optional Additional Skip Transposition Post-Processing
-enable_skip = True
+enable_skip = False
 skip_sizes = list(range(1, 25))
- 
+#=========================================================
+
 if (ciphertext_mode == "CUSTOM"):
     ciphertext = "UNZLSELLXVHVIFYHBJHVWCIWXRZXYXUFYJPQVIUUUSLTWWZLWQITW"
-if (ciphertext_mode == "DEMONSTRATION"):
-    ciphertext = "W L Y N P A E K A R B A B P N A E Z K X T E E C Y B K A L M L R D M S R S F D B R W Q B S H H F C U W K I K A F K R B O D K I S F Z L O J U T V X K S B U G W C Q B D"
-    cryptography_mode = "DECRYPT"
-    QUAGMIRE_MODE = "4"
-    row_keyword = "KRYPTOS"
-    vertical_keyword = "PALIMPSEST"
-    top_keyword = "MEDUSA"
 if (ciphertext_mode == "K1"):
+    # Use row_keyword: KRYPTOS & vertical_keyword: PALIMPSEST
     ciphertext = "EMUFPHZLRFAXYUSDJKZLDKRNSHGNFIVJYQTQUXQBQVYUVLLTREVJYQTMKYRDMFD"
 if (ciphertext_mode == "K2"):
+    # Use row_keyword: KRYPTOS & vertical_keyword: ABSCISSA
     ciphertext = "VFPJUDEEHZWETZYVGWHKKQETGFQJNCEGGWHKKDQMCPFQZDQMMIAGPFXHQRLGTIMVMZJANQLVKQEDAGDVFRPJUNGEUNAQZGZLECGYUXUEENJTBJLBQCRTBJDFHRRYIZETKZEMVDUFKSJHKFWHKUWQLSZFTIHHDDDUVHDWKBFUFPWNTDFIYCUQZEREEVLDKFEZMOQQJLTTUGSYQPFEUNLAVIDXFLGGTEZFKZBSFDQVGOGIPUFXHHDRKFFHQNTGPUAECNUVPDJMQCLQUMUNEDFQELZZVRRGKFFVOEEXBDMVPNFQXEZLGREDNQFMPNZGLFLPMRJQYALMGNUVPDXVKPDQUMEBEDMHDAFMJGZNUPLGEWJLLAETG"
 if (ciphertext_mode == "K3"):
     ciphertext = "ENDYAHROHNLSRHEOCPTEOIBIDYSHNAIACHTNREYULDSLLSLLNOHSNOSMRWXMNETPRNGATIHNRARPESLNNELEBLPIIACAEWMTWNDITEENRAHCTENEUDRETNHAEOETFOLSEDTIWENHAEIOYTEYQHEENCTAYCREIFTBRSPAMHHEWENATAMATEGYEERLBTEEFOASFIOTUETUAEOTOARMAEERTNRTIBSEDDNIAAHTTMSTEWPIEROAGRIEWFEBAECTDDHILCEIHSITEGOEAOSDDRYDLORITRKLMLEHAGTDHARDPNEOHMGFMFEUHEECDMRIPFEIMEHNLSSTTRTVDOHW"
 if (ciphertext_mode == "K4"):
     ciphertext = "OBKRUOXOGHULBSOLIFBBWFLRVQQPRNGKSSOTWTQSJQSSEKZZWATJKLUDIAWINFBNYPVTTMZFPKWGDKZXTJCDIGKUHUAUEKCAR"
+if (ciphertext_mode == "K4_REVERSE"):
+    ciphertext = "RACKEUAUHUKGIDCJTXZKDGWKPFZMTTVPYNBFNIWAIDULKJTAWZZKESSQJSQTWTOSSKGNRPQQVRLFWBBFILOSBLUHGOXOURKBO"
 if (ciphertext_mode == "K4_SNAKE"):
     ciphertext = "O B K R O S S K G N R P Q Q V R L F W B B F I L O S B L U H G O X O U T W T Q S J Q S S E K Z Z W A T J K L U D I A W I N F B N Y P R A C K E U A U H U K G I D C J T X Z K D G W K P F Z M T T V"
+if (ciphertext_mode == "K4_SNAKE_REVERSE"):
+    ciphertext = "V T T M Z F P K W G D K Z X T J C D I G K U H U A U E K C A R P Y N B F N I W A I D U L K J T A W Z Z K E S S Q J S Q T W T U O X O G H U L B S O L I F B B W F L R V Q Q P R N G K S S O R K B O"
 if (ciphertext_mode == "K4_CRIB"):
     ciphertext = "x x x x x x x x x x x x x x x x x x x x x E A S T N O R T H E A S T x x x x x x x x x x x x x x x x x x x x x x x x x x x x x B E R L I N C L O C K x x x x x x x x x x x x x x x x x x x x x x x"
-if (ciphertext_mode == "K1_ENCRYPT"):
-    ciphertext = "BETWEENSUBTLESHADINGANDTHEABSENCEOFLIGHTLIESTHENUANCEOFIQLUSION"
-if (ciphertext_mode == "K2_ENCRYPT"):
-    ciphertext = "I T W A S T O T A L L Y I N V I S I B L E H O W S T H A T P O S S I B L E T H E Y U S E D T H E E A R T H S M A G N E T I C F I E L D X T H E I N F O R M A T I O N W A S G A T H E R E D A N D T R A N S M I T T E D U N D E R G R U U N D T O A N U N K N O W N L O C A T I O N X D O E S L A N G L E Y K N O W A B O U T T H I S T H E Y S H O U L D I T S B U R I E D O U T T H E R E S O M E W H E R E X W H O K N O W S T H E E X A C T L O C A T I O N O N L Y W W T H I S W A S H I S L A S T M E S S A G E X T H I R T Y E I G H T D E G R E E S F I F T Y S E V E N M I N U T E S S I X P O I N T F I V E S E C O N D S N O R T H S E V E N T Y S E V E N D E G R E E S E I G H T M I N U T E S F O R T Y F O U R S E C O N D S W E S T I D B Y R O W S"
+if (ciphertext_mode == "PK1"):
+    # Use row_keyword: KRYPTOS & vertical_keyword: PROVENANCE
+    ciphertext = "MQRALWVSJIMSXGJSVWQPHJMDINKXGIMHNKYUTXTTGJCYIABTJUMQEOFBITNBMONGVWETDLAIJPQYMZIKBQVRXZHUIJVDJLTQHIQYHEQKFTPTJYCONAFXYWQIBONAYXGWJFFIQMVXNVQYQFMWKFEJQYZFBWKXBKDQLJRELWGWDKHECRSFBKOVQJCPYDNKXYHE"
+if (ciphertext_mode == "PK3"):
+    ciphertext = "HWZTRPPVHZLHRBQBQOMZBACNOTHLYGBATBTKHERQHRVZWWXCTZLRRVZCROHCIOTBVJKCALNKFJHEIMKUHJPFNVBCGQYNZMOHGBUTDPTJTDSUBOLYPLSKIEMANXMFNDBCTNRTLLVQOXUBPAXQUVDNXUMCIFOGETZWHJDIWDBWQFXAOMWBBCQXYZFZBTRIQMYOFFMVWSFLPTHFFQUINGLAMSQJOPUESPIQGZZCTJVRLQMIIRROOGBWNPQMXFQDVFTCVGNRIXQKUYYKBRTWPCDHLAWC"
     
+# ======= Demonstration Modes below override configuration parameters =======
+# Decryption Demonstrations
+if (ciphertext_mode == "Quagmire_II_Decrypt_Demo"): # Quagmire II Decrypt Demo
+    QUAGMIRE_MODE = "2"
+    row_keyword = "SPRINGFEVER"
+    vertical_keyword = "FLOWER"
+    ciphertext = "JICIC OSLYK ILFVC HEBDX CCORJ IOEWA FMWKK TXBGW HRJIB KEDBJ WZABU XWHEH UXOXC U"
+if (ciphertext_mode == "Quagmire_III_Decrypt_Demo"): # Quagmire III Decrypt Demo
+    QUAGMIRE_MODE = "3"
+    row_keyword = "AUTOMOBILE"
+    vertical_keyword = "HIGHWAY"
+    ciphertext = "KRSLW MITJD VIABM RGQMT MLLIV IFUIX RHTNY ONVRH HIIIR MCAOV EI"
+if (ciphertext_mode == "Quagmire_IV_Decrypt_Demo"): # Quagmire IV Decrypt Demo
+    ciphertext = "VBMRF CYISP MPBRR HEICX RREIG DX"
+    cryptography_mode = "DECRYPT"
+    QUAGMIRE_MODE = "4"
+    row_keyword = "PERCEPTION"
+    vertical_keyword = "EXTRA"
+    top_keyword = "SENSORY"
+    
+# Encryption Demonstrations
+if (ciphertext_mode == "K1_Encrypt_Encrypt_Demo"): # Kryptos K1 Encrypt Demo
+    cryptography_mode = "ENCRYPT"
+    QUAGMIRE_MODE = "3"
+    row_keyword = "KRYPTOS"
+    vertical_keyword = "PALIMPSEST"
+    ciphertext = "BETWEENSUBTLESHADINGANDTHEABSENCEOFLIGHTLIESTHENUANCEOFIQLUSION"
+if (ciphertext_mode == "K2_Encrypt_Encrypt_Demo"): # Kryptos K2 Encrypt Demo
+    cryptography_mode = "ENCRYPT"
+    QUAGMIRE_MODE = "3"
+    row_keyword = "KRYPTOS"
+    vertical_keyword = "ABSCISSA"
+    ciphertext = "ITWASTOTALLYINVISIBLEHOWSTHATPOSSIBLETHEYUSEDTHEEARTHSMAGNETICFIELDXTHEINFORMATIONWASGATHEREDANDTRANSMITTEDUNDERGRUUNDTOANUNKNOWNLOCATIONXDOESLANGLEYKNOWABOUTTHISTHEYSHOULDITSBURIEDOUTTHERESOMEWHEREXWHOKNOWSTHEEXACTLOCATIONONLYWWTHISWASHISLASTMESSAGEXTHIRTYEIGHTDEGREESFIFTYSEVENMINUTESSIXPOINTFIVESECONDSNORTHSEVENTYSEVENDEGREESEIGHTMINUTESFORTYFOURSECONDSWESTIDBYROWS"
+# =======Demonstration Modes above override configuration parameters =======
+
 # =========================================================
 # Utility Functions
 # =========================================================
@@ -147,7 +185,12 @@ def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword
     repeated_keyword = repeat_keyword(vertical_keyword,len(ciphertext_clean))
     
     # Quagmire III
-    if mode == "3":
+    if mode == "2":
+        top_keyword = "ABC"
+        lines.append("    Quagmire II Table")
+        lines.append("    -  " + " ".join(top_alphabet))
+        
+    elif mode == "3":
         lines.append("    Quagmire III Table")
         lines.append("    -  " + " ".join(row_alphabet))
         
@@ -168,11 +211,14 @@ def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword
         lines.append(double_space(ciphertext_clean))
         
         # Check for expected crib word character counts
-        missing = phrase_deficit(plaintext)
-        if missing:
-            lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Fail ({minimum_characters}) {missing}")
+        if enable_minimum_K4_characters:
+            missing = phrase_deficit(plaintext)
+            if missing:
+                lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Fail ({minimum_characters}) {missing}")
+            else:
+                lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Pass ({minimum_characters})")
         else:
-            lines.append(f"\nPlaintext (Decrypted) Minimum Characters: Pass ({minimum_characters})")
+                lines.append(f"\nPlaintext (Decrypted):")
             
         lines.append(double_space(plaintext))
     if (cryptography_mode == "ENCRYPT"):
@@ -221,16 +267,22 @@ def encrypt_quagmire(plaintext,top_alphabet,row_alphabet,vertical_keyword):
         ct_char = row[col]
         ciphertext.append(ct_char)
     return ''.join(ciphertext)
-
-if QUAGMIRE_MODE == "3":
+    
+if QUAGMIRE_MODE == "2":
+    row_alphabet = keyed_alphabet(row_keyword)
+    top_alphabet = keyed_alphabet("ABC")
+    vertical_alphabet = keyed_alphabet(vertical_keyword)
+elif QUAGMIRE_MODE == "3":
     row_alphabet = keyed_alphabet(row_keyword)
     top_alphabet = row_alphabet
+    vertical_alphabet = keyed_alphabet(vertical_keyword)
 elif QUAGMIRE_MODE == "4":
     top_alphabet = keyed_alphabet(top_keyword)
     row_alphabet = keyed_alphabet(row_keyword)
+    vertical_alphabet = keyed_alphabet(vertical_keyword)
 else:
     raise ValueError(
-        "INVALID QUAGMIRE MODE MUST BE 3 OR 4"
+        "INVALID QUAGMIRE MODE MUST BE 2, 3, OR 4"
     )
 
 # ==========================================
@@ -323,8 +375,10 @@ with open(filename, "w", encoding="utf-8") as f:
     output(f"Method: {cryptography_mode}", f)
     output(f"Quagmire Mode: {QUAGMIRE_MODE.replace(' ', '_')}", f)
     output(f"Top Alphabet: {top_alphabet}", f)
+    output(f"Row Keyword: {row_keyword}", f)
     output(f"Row Alphabet: {row_alphabet}", f)
     output(f"Vertical Keyword: {vertical_keyword}", f)
+    output(f"Vertical Alphabet: {vertical_alphabet}", f)
     output(f"Ciphertext Mode Name: {ciphertext_mode}", f)
     output(f"Ciphertext: {ciphertext}", f)
     output(f"Ciphertext Length: {len(ciphertext)}\n", f)
