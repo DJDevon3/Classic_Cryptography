@@ -21,7 +21,7 @@ top keyword only unique in mode 4
 QUAGMIRE_MODE = "3" # Valid modes: 3 or 4
 cryptography_mode = "DECRYPT" # Valid modes: ENCRYPT or DECRYPT
 
-ciphertext_mode = "Quagmire_II_Demo"
+ciphertext_mode = "Quagmire_III_Decrypt_Demo"
 row_keyword = "KRYPTOS" # Alphabet generated from keyword
 vertical_keyword = "ABSCISSA" # Repeated vigenere style keyword
 
@@ -107,10 +107,7 @@ if (ciphertext_mode == "K2_Encrypt_Encrypt_Demo"): # Kryptos K2 Encrypt Demo
 # Utility Functions
 # =========================================================
 def clean_text(text):
-    return ''.join(
-        c for c in text.upper()
-        if c in STD
-    )
+    return ''.join(c for c in text.upper()if c in STD)
 
 def keyed_alphabet(keyword):
     keyword = clean_text(keyword)
@@ -140,10 +137,9 @@ def repeat_keyword(keyword, length):
 
 def output(text, file_handle=None):
     """
-    Print to console and optionally save to file.
+    Print to console and save to file
     """
     print(text)
-
     if file_handle:
         file_handle.write(str(text) + "\n")
 
@@ -160,26 +156,20 @@ def phrase_deficit(text, phrase=minimum_characters):
             missing[letter] = needed - have
 
     return missing
-# =========================================================
-# Build Tableau
-# =========================================================
+
+
 def build_tableau(row_alphabet, vertical_keyword):
-    vertical_alpha = keyed_alphabet(
-        vertical_keyword
-    )
+    """ Build Tableau Output """
+    vertical_alpha = keyed_alphabet(vertical_keyword)
     matrix = []
     for ch in vertical_alpha:
-        row = rotate_alphabet(
-            row_alphabet,
-            ch
-        )
+        row = rotate_alphabet(row_alphabet,ch)
         matrix.append(row)
     return matrix
 
-# =========================================================
-# Format Output
-# =========================================================
+
 def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword, vertical_keyword, matrix, ciphertext, plaintext):
+    """ Different modes require different formatting """
     lines = []
     ciphertext_clean = clean_text(ciphertext)
     repeated_keyword = repeat_keyword(vertical_keyword,len(ciphertext_clean))
@@ -210,7 +200,7 @@ def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword
         lines.append("\nCiphertext")
         lines.append(double_space(ciphertext_clean))
         
-        # Check for expected crib word character counts
+        # Check for minimum crib character count
         if enable_minimum_K4_characters:
             missing = phrase_deficit(plaintext)
             if missing:
@@ -228,46 +218,36 @@ def tableau_to_string(mode, top_alphabet, top_keyword, row_alphabet, row_keyword
         lines.append(double_space(plaintext))
     return "\n".join(lines)
 
-# =========================================================
-# Save Output
-# =========================================================
+
 def decrypt_quagmire(ciphertext,top_alphabet,row_alphabet,vertical_keyword):
+    """ Quagmire Decryption Function"""
     ciphertext = clean_text(ciphertext)
     vertical_keyword = clean_text(vertical_keyword)
     plaintext = []
     repeated_keyword = repeat_keyword(vertical_keyword,len(ciphertext))
     for i, ct_char in enumerate(ciphertext):
         indicator_char = repeated_keyword[i]
-
-        # Build tableau row
-        row = rotate_alphabet(
-            row_alphabet,
-            indicator_char
-        )
-
-        # Find ciphertext letter position
+        row = rotate_alphabet(row_alphabet,indicator_char)
         col = row.index(ct_char)
-
-        # Plaintext from top alphabet
         pt_char = top_alphabet[col]
         plaintext.append(pt_char)
     return ''.join(plaintext)
     
 def encrypt_quagmire(plaintext,top_alphabet,row_alphabet,vertical_keyword):
+    """ Quagmire Encryption Function"""
     plaintext = clean_text(plaintext)
     vertical_keyword = clean_text(vertical_keyword)
     ciphertext = []
     repeated_keyword = repeat_keyword(vertical_keyword,len(plaintext))
     for i, pt_char in enumerate(plaintext):
         indicator_char = repeated_keyword[i]
-        
-        # Build tableau
         row = rotate_alphabet(row_alphabet,indicator_char)
         col = top_alphabet.index(pt_char)
         ct_char = row[col]
         ciphertext.append(ct_char)
     return ''.join(ciphertext)
     
+# Quagmire II, III, or IV Mode switch globals
 if QUAGMIRE_MODE == "2":
     row_alphabet = keyed_alphabet(row_keyword)
     top_alphabet = keyed_alphabet("ABC")
@@ -281,17 +261,12 @@ elif QUAGMIRE_MODE == "4":
     row_alphabet = keyed_alphabet(row_keyword)
     vertical_alphabet = keyed_alphabet(vertical_keyword)
 else:
-    raise ValueError(
-        "INVALID QUAGMIRE MODE MUST BE 2, 3, OR 4"
-    )
+    raise ValueError("INVALID QUAGMIRE MODE MUST BE 2, 3, OR 4")
 
 # ==========================================
 # SCYTALE FUNCTIONS
 # ==========================================
 def scytale_decrypt(text, rod_size):
-    """
-    Standard scytale decryption
-    """
     length = len(text)
     cols = math.ceil(length / rod_size)
     grid = [['' for _ in range(cols)] for _ in range(rod_size)]
@@ -364,12 +339,13 @@ tableau_output = tableau_to_string(
     plaintext=plaintext
 )
 
-# save to txt file
+# Text file output formatting
 first_ten = ciphertext[0:10]
 output_dir = "Quagmire III IV Results"
 os.makedirs(output_dir, exist_ok=True)
 filename = os.path.join(output_dir,f"{cryptography_mode}_Q{QUAGMIRE_MODE.replace(' ', '_')}_({row_keyword}-{vertical_keyword})_{first_ten}.txt")
 
+# Open text file and append method headers & results to file
 with open(filename, "w", encoding="utf-8") as f:
     output("=" * 45, f)
     output(f"Method: {cryptography_mode}", f)
