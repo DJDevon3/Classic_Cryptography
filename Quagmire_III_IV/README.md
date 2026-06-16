@@ -17,11 +17,19 @@ To run the script simply use command prompt and point python to where the script
 - C:\Users\Devon\Documents\Kryptos Scripts>python Quagmire_III_IV.py
 - It will then run the program, print out the matrix to the prompt, and save a text file with the results. 
 
+
 Example 1 (Console Print):
+- Displayed in CMD Prompt for quick glance without needing to open a result text file
+  
 ![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Console_Print_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Console_Print_Example.PNG)
 
 Example 2 (Opened Text File):
+- Benefit of logging results to text file is easier searching for patterns and logging attempts
+  
 ![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Text_File_Save_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Text_File_Save_Example.PNG)
 
-Example 3 (Paradigm Kryptos Cryptography Challenge): A real world crack using this tool in a cryptography challenge
+Example 3 (Paradigm Kryptos Cryptography Challenge PK1): 
+- A real world crack using this tool in a cryptography challenge. 
+- The vertical keyword was found with [Colski Keyword Finder Script](https://github.com/DJDevon3/Classic_Cryptography/tree/main/Colski_Keyword_Finder)
+  
 ![https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Provenance_PK1_Example.PNG](https://github.com/DJDevon3/Classic_Cryptography/blob/main/Quagmire_III_IV/Provenance_PK1_Example.PNG)
