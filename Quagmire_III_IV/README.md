@@ -1,7 +1,8 @@
-# Quagmire III & IV Encryption & Decryption
-A single python script that can encrypt or decrypt both Quagmire III or IV
+# Quagmire II, III & IV Encryption & Decryption
+A single python script that can encrypt or decrypt Quagmire II, III or IV
 
 ### Customizable:
+- Hardcoded ACA Demonstrations
 - Keyworded Alphabets
 - Displays Entire Vigenere Table
 - Displays entire repeated keyword, plaintext, and ciphertext
